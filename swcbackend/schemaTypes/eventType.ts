@@ -37,5 +37,10 @@ export const eventType = defineType({
         .required()
         .error('Image Required')
     }),
+    defineField({
+        name: 'entryFee',
+        title:'Entry Fee',
+        type: 'number'
+    })
   ],
 })
