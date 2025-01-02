@@ -30,5 +30,18 @@ export const clubType = defineType({
         .required()
         .error('Club logo required!')
     }),
+    defineField({
+      name: 'faculty1',
+      type: 'string',
+      title:'Faculty 1',
+      placeholder:"Faculty Co-Ordinator 1"
+    }),
+    defineField({
+      name: 'faculty2',
+      type: 'string',
+      title:'Faculty 2',
+      initialValue:"null",
+      placeholder:"Faculty Co-Ordinator 2"
+    }),
   ],
 })
