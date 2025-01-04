@@ -16,9 +16,9 @@ export const LandingImageWithContent=({image,heading,subheading,className,varian
                 <Image  src="/home-page-trapezium.png" width={850} height={100} alt='homepage-trapezium-element' />
                 {/* Variant-Based Content */}
                 {variant === "text" && (
-                    <div className={`absolute top-10 text-white text-7xl font-bold ${className}`}>
-                        <h1>{heading}</h1>
-                        <p className="mt-2 text-3xl">{subheading}</p>
+                    <div className={`absolute space-y-2 top-16 left-12 text-white font-bold ${className}`}>
+                        <h1 className="text-8xl underline decoration-[7px]">{heading}</h1>
+                        <p className=" text-3xl">{subheading}</p>
                     </div>
                 )}
                 {variant === "image" && image && (
