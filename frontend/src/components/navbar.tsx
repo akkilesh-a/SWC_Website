@@ -31,16 +31,16 @@ const NavBarLinks = [
 
 const NavBar = () => {
   return (
-    <div className="bg-[#00194E] flex justify-between items-center h-[8vh]">
-      <div className="relative w-[400px] h-[150px]">
+    <div className="bg-[#00194E] flex justify-between items-center h-[8vh] px-4">
+      <div>
         <Image
           src="/swc-logos/swc-logo-white.png"
           alt="logo"
-          layout="fill" 
-          objectFit="cover"
+          height={100}
+          width={200}
         />
       </div>
-      <div className="flex gap-x-10 items-center px-8">
+      <div className={`flex gap-x-10 items-center px-8 font-sansation`}>
         {NavBarLinks.map((link, index) => {
           return (
             <Link key={index} className="text-white" href ={link.url}>

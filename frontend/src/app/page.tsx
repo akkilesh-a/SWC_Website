@@ -17,8 +17,8 @@ const Home = () => {
 const StudentWelfareCommitteeDescription=()=>{
     return(
         <div className='text-center flex flex-col justify-center items-center space-y-8 p-16'>
-            <h1 className='underline font-bold text-7xl'>Student Welfare Committee</h1>
-            <div  className='w-[400px] md:w-[700px]'>
+            <h1 className='underline font-bold font-dmSerifDisplay text-7xl'>Student Welfare Committee</h1>
+            <div  className='w-[400px] md:w-[700px] font-dmSerifText'>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sem ex, 
                     elementum eu velit ac, porta semper justo. Donec laoreet dapibus mi faucibus dictum. 
                     Nullam semper diam ac diam condimentum posuere. Suspendisse potenti. Nunc sapien mi, 
