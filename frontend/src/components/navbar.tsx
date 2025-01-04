@@ -34,7 +34,7 @@ const NavBar = () => {
     <div className="bg-[#00194E] flex justify-between items-center h-[8vh] px-4">
       <div>
         <Image
-          src="/swc-logos/swc-logo-white.png"
+          src="/swc-logos/swc-logo-white-cropped.png"
           alt="logo"
           height={100}
           width={200}
