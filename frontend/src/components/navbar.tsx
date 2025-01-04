@@ -42,19 +42,15 @@ const NavBar = () => {
       </div>
       <div className="flex gap-x-10 items-center px-8">
         {NavBarLinks.map((link, index) => {
-          return <Links key={index} text={link.text} url={link.url} />;
+          return (
+            <Link key={index} className="text-white" href ={link.url}>
+              {link.text}
+            </Link>
+          );
         })}
       </div>
     </div>
   );
 };
-
-const Links =({text,url}:{text:string , url:string})=>{
-  return (
-    <Link className="text-white" href ={url}>
-      {text}
-    </Link>
-  );
-}
 
 export default NavBar;
