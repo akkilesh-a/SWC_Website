@@ -1,4 +1,4 @@
-import { LandingImageWithContent } from '@/components'
+import { BlueButton, DirectorNote, LandingImageWithContent } from '@/components'
 import React from 'react'
 
 const Home = () => {
@@ -10,15 +10,18 @@ const Home = () => {
         <div>
             <StudentWelfareCommitteeDescription />
         </div>
+        <div>
+            <DirectorNote/>
+        </div>
     </div>
   )
 }
 
 const StudentWelfareCommitteeDescription=()=>{
     return(
-        <div className='text-center flex flex-col justify-center items-center space-y-8 p-16'>
-            <h1 className='underline font-bold font-dmSerifDisplay text-7xl'>Student Welfare Committee</h1>
-            <div  className='w-[400px] md:w-[700px] font-dmSerifText'>
+        <div className='text-center flex flex-col justify-center items-center space-y-8 p-16 bg-[#F6F6F6]'>
+            <h1 className='underline font-bold font-dmSerifDisplay text-7xl '>Student Welfare Committee</h1>
+            <div  className='w-[400px] md:w-[700px] font-inter'>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sem ex, 
                     elementum eu velit ac, porta semper justo. Donec laoreet dapibus mi faucibus dictum. 
                     Nullam semper diam ac diam condimentum posuere. Suspendisse potenti. Nunc sapien mi, 
@@ -27,6 +30,7 @@ const StudentWelfareCommitteeDescription=()=>{
                     Pellentesque commodo facilisis tempus.
                 </p>
             </div>
+            <BlueButton text={"More About SWC"}/>
         </div>
     )
 }
