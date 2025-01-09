@@ -22,8 +22,13 @@ export const eventType = defineType({
     }),
     defineField({
         name: 'clubname',
-        type: 'reference',
-        to:[{type:'club'}]
+        type: 'array',
+        of:[
+            {
+                type:'reference',
+                to:[{type:'club'}]
+            }
+        ]
     }),
     defineField({
         name: 'description',
