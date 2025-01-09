@@ -30,7 +30,7 @@ const StudentWelfareCommitteeDescription=()=>{
                     Pellentesque commodo facilisis tempus.
                 </p>
             </div>
-            <BlueButton text={"More About SWC"}/>
+            <BlueButton>More About SWC</BlueButton>
         </div>
     )
 }

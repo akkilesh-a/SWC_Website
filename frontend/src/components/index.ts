@@ -4,6 +4,7 @@ import { LandingImageWithContent } from "./landing-image-with-content";
 import NavBar from "./navbar";
 import BlueButton from "./blue-button";
 import DirectorNote from "./director-note";
+import OfficeBearers from "./office-bearers";
 
 export {
     CustomComponent,
@@ -12,4 +13,5 @@ export {
     NavBar,
     BlueButton,
     DirectorNote,
+    OfficeBearers,
 }
