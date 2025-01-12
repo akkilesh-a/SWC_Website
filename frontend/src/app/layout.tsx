@@ -1,31 +1,31 @@
 import type { Metadata } from "next";
 import { DM_Serif_Display, DM_Serif_Text } from "next/font/google";
-import localFont from 'next/font/local'
+import localFont from "next/font/local";
 import "./globals.css";
 import { NavBar } from "@/components";
 
 const dmSerifDisplay = DM_Serif_Display({
-  weight:"400",
-  subsets:['latin'],
-  variable:"--font-dm-serif-display"
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-dm-serif-display",
 });
 
 const dmSerifText = DM_Serif_Text({
-  weight:"400",
-  subsets:['latin'],
-  variable:"--font-dm-serif-text",
-})
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-dm-serif-text",
+});
 
 const sansation = localFont({
   src: [
     {
-      path: '../fonts/sansation/Sansation_Regular.ttf',
-      weight: '400',
-      style: 'normal',
+      path: "../fonts/sansation/Sansation_Regular.ttf",
+      weight: "400",
+      style: "normal",
     },
   ],
-  variable: '--font-sansation',
-})
+  variable: "--font-sansation",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -42,7 +42,7 @@ export default function RootLayout({
       <body
         className={`${dmSerifDisplay.variable} ${dmSerifText.variable} ${sansation.variable}`}
       >
-        <NavBar/>
+        <NavBar />
         {children}
       </body>
     </html>

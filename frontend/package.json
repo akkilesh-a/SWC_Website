@@ -16,6 +16,7 @@
     "lucide-react": "^0.469.0",
     "next": "15.1.2",
     "next-sanity": "^9.8.30",
+    "prettier": "^3.4.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^2.6.0",

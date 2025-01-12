@@ -1,6 +1,6 @@
-import { LandingImageWithContent } from '@/components'
-import { client } from '@/sanity/client';
-import { defineQuery } from 'next-sanity';
+import { LandingImageWithContent } from "@/components";
+import { client } from "@/sanity/client";
+import { defineQuery } from "next-sanity";
 
 const FETCH_NEWSLETTERS = defineQuery(`*[
     _type=="newsletter"  
@@ -8,10 +8,10 @@ const FETCH_NEWSLETTERS = defineQuery(`*[
       _id,
       link,
       date
-    }`)
+    }`);
 
-async function NewsLettersPage(){
-  const data=await client.fetch(FETCH_NEWSLETTERS)
+async function NewsLettersPage() {
+  const data = await client.fetch(FETCH_NEWSLETTERS);
   // console.log(data)
   // const data=[
   //   {
@@ -28,20 +28,25 @@ async function NewsLettersPage(){
 
   return (
     <div>
-        <div>
-          <LandingImageWithContent variant='text' heading='News Letters' subheading='Student Welfare Committee' />
+      <div>
+        <LandingImageWithContent
+          variant="text"
+          heading="News Letters"
+          subheading="Student Welfare Committee"
+        />
+      </div>
+      <div className="bg-white flex space-y-8 flex-col items-center justify-center p-16">
+        <div className="text-3xl md:text-6xl font-bold underline font-dmSerifDisplay">
+          Latest Newsletter
         </div>
-        <div className='bg-white flex space-y-8 flex-col items-center justify-center p-16'>
-          <div className='text-3xl md:text-6xl font-bold underline font-dmSerifDisplay'>Latest Newsletter</div>
-          <iframe
-            className="bg-white border border-white w-[400px] sm:w-[600px] md:w-[1000px] h-[500px]"
-            key={data[0]._id}
-            src={data[0].link}
-          />
-        </div>
+        <iframe
+          className="bg-white border border-white w-[400px] sm:w-[600px] md:w-[1000px] h-[500px]"
+          key={data[0]._id}
+          src={data[0].link}
+        />
+      </div>
     </div>
-
-  )
+  );
 }
 
-export default NewsLettersPage
+export default NewsLettersPage;

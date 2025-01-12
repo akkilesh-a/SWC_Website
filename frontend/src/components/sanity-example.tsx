@@ -28,7 +28,9 @@ const urlFor = (source: SanityImageSource) =>
 
 const SanityExample = () => {
   const [loading, setLoading] = useState(true);
-  const [officeBearers, setOfficeBearers] = useState<OfficeBearer[] | null>(null);
+  const [officeBearers, setOfficeBearers] = useState<OfficeBearer[] | null>(
+    null,
+  );
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -36,9 +38,9 @@ const SanityExample = () => {
       try {
         const data = await client.fetch(EXAMPLE_QUERY);
         setOfficeBearers(data);
-      } catch (err:unknown) {
+      } catch (err: unknown) {
         setError("Failed to fetch data. Please try again later.");
-        console.log(err)
+        console.log(err);
       } finally {
         setLoading(false);
       }
@@ -60,7 +62,10 @@ const SanityExample = () => {
               : "https://placehold.co/550x310/png";
 
             return (
-              <li className="bg-white p-4 rounded-lg shadow-md" key={officeBearer._id}>
+              <li
+                className="bg-white p-4 rounded-lg shadow-md"
+                key={officeBearer._id}
+              >
                 <div className="flex justify-center">
                   <Image
                     src={imgURL || "https://placehold.co/550x310/png"}
@@ -69,8 +74,12 @@ const SanityExample = () => {
                     width="200"
                   />
                 </div>
-                <h2 className="text-xl font-semibold mt-2">{officeBearer.name}</h2>
-                <h4 className="text-lg font-semibold underline">{officeBearer.designation}</h4>
+                <h2 className="text-xl font-semibold mt-2">
+                  {officeBearer.name}
+                </h2>
+                <h4 className="text-lg font-semibold underline">
+                  {officeBearer.designation}
+                </h4>
                 <p className="mt-1">{officeBearer.description}</p>
               </li>
             );

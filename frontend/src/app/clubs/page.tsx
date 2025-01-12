@@ -1,12 +1,16 @@
-import { LandingImageWithContent } from '@/components'
-import React from 'react'
+import { LandingImageWithContent } from "@/components";
+import React from "react";
 
 const ClubsPage = () => {
   return (
     <div>
-        <LandingImageWithContent variant='text' heading='Clubs' subheading='Student Welfare Committee' />
+      <LandingImageWithContent
+        variant="text"
+        heading="Clubs"
+        subheading="Student Welfare Committee"
+      />
     </div>
-  )
-}
+  );
+};
 
-export default ClubsPage
+export default ClubsPage;
