@@ -1,6 +1,7 @@
 import {
   BlueButton,
   DirectorNote,
+  AnnouncementCard,
   LandingImageWithContent,
   OfficeBearers,
 } from "@/components";
@@ -22,6 +23,9 @@ const Home = () => {
       </div>
       <div>
         <DirectorNote />
+      </div>
+      <div>
+        <AnnouncementCard />
       </div>
       <div>
         <OfficeBearers />

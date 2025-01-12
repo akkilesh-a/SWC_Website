@@ -5,12 +5,14 @@ import NavBar from "./navbar";
 import BlueButton from "./blue-button";
 import DirectorNote from "./director-note";
 import OfficeBearers from "./office-bearers";
+import AnnouncementCard from "./announcement";
 
 export {
   CustomComponent,
   SanityExample,
   LandingImageWithContent,
   NavBar,
+  AnnouncementCard,
   BlueButton,
   DirectorNote,
   OfficeBearers,
