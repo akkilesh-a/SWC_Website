@@ -8,7 +8,7 @@ import { Announcement } from "@/sanity/types";
 import Link from "next/link";
 import { ArrowUpRightFromSquare } from "lucide-react";
 
-const Announcements_query = defineQuery(
+const ANNOUNCEMENTS_QUERY = defineQuery(
   `*[_type == "announcement"]{
     _id,
     title,
@@ -20,7 +20,7 @@ const Announcements_query = defineQuery(
 );
 
 export default async function AnnouncementCard() {
-  const data: Announcement[] = await client.fetch(Announcements_query);
+  const data: Announcement[] = await client.fetch(ANNOUNCEMENTS_QUERY);
 
   return (
     <div className="bg-gray-100 min-h-screen py-10">
