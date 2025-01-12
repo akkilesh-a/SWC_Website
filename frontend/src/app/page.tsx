@@ -15,6 +15,12 @@ const Home = () => {
       <div>
         <StudentWelfareCommitteeDescription />
       </div>
+      <div>
+        <DirectorNote />
+      </div>
+      <div>
+        <OfficeBearers />
+      </div>
     </div>
   );
 };
