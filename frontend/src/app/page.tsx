@@ -1,4 +1,4 @@
-import { BlueButton, DirectorNote, LandingImageWithContent } from '@/components'
+import { BlueButton, DirectorNote, LandingImageWithContent, OfficeBearers } from '@/components'
 import React from 'react'
 
 const Home = () => {
@@ -12,6 +12,9 @@ const Home = () => {
         </div>
         <div>
             <DirectorNote/>
+        </div>
+        <div>
+            <OfficeBearers/>
         </div>
     </div>
   )
