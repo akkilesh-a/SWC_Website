@@ -9,4 +9,4 @@ const urlFor = (source: SanityImageSource) =>
     ? imageUrlBuilder({ projectId, dataset }).image(source)
     : null;
 
-export { projectId, dataset, urlFor, } 
+export { projectId, dataset, urlFor };

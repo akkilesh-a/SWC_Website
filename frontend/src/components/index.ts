@@ -6,7 +6,12 @@ import BlueButton from "./blue-button";
 import DirectorNote from "./director-note";
 import OfficeBearers from "./office-bearers";
 
-export { CustomComponent, SanityExample, LandingImageWithContent, NavBar,
-    BlueButton,
-    DirectorNote,
-    OfficeBearers, };
+export {
+  CustomComponent,
+  SanityExample,
+  LandingImageWithContent,
+  NavBar,
+  BlueButton,
+  DirectorNote,
+  OfficeBearers,
+};

@@ -47,10 +47,12 @@ export default async function OfficeBearers() {
                   width={263.02}
                   height={362.41}
                   className="overflow-hidden"
-                /> 
+                />
                 <div className="space-y-2">
                   <Text className="font-semibold">{bearer.name}</Text>
-                  <Text className="text-sm text-gray-600">{bearer.designation}</Text>
+                  <Text className="text-sm text-gray-600">
+                    {bearer.designation}
+                  </Text>
                 </div>
               </div>
             );

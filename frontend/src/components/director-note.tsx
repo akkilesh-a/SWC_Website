@@ -35,9 +35,7 @@ export default async function DirectorNote() {
     return (
       <div className="flex flex-col md:flex-row justify-center items-center p-8 space-y-16 md:space-y-0 md:space-x-32">
         <div className="max-w-[526px] text-center md:text-left space-y-4">
-          <SubHeading className="underline">
-            Director&apos;s Note
-          </SubHeading>
+          <SubHeading className="underline">Director&apos;s Note</SubHeading>
 
           <Text>{director.description}</Text>
         </div>

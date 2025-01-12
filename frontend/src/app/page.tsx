@@ -1,4 +1,9 @@
-import { BlueButton, DirectorNote, LandingImageWithContent, OfficeBearers } from "@/components";
+import {
+  BlueButton,
+  DirectorNote,
+  LandingImageWithContent,
+  OfficeBearers,
+} from "@/components";
 import { SubHeading } from "@/components/ui";
 import Text from "@/components/ui/text";
 import React from "react";
@@ -42,7 +47,7 @@ const StudentWelfareCommitteeDescription = () => {
           facilisi. Pellentesque commodo facilisis tempus.
         </Text>
       </div>
-            <BlueButton>More About SWC</BlueButton>
+      <BlueButton>More About SWC</BlueButton>
     </div>
   );
 };
