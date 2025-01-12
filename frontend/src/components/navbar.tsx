@@ -43,7 +43,7 @@ const NavBar = () => {
       <div className={`flex gap-x-10 items-center px-8 font-sansation`}>
         {NavBarLinks.map((link, index) => {
           return (
-            <Link key={index} className="text-white" href ={link.url}>
+            <Link key={index} className="text-white" href={link.url}>
               {link.text}
             </Link>
           );
