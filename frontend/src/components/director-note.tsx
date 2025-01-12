@@ -1,9 +1,7 @@
 import { client } from "@/sanity/client";
 import { defineQuery } from "next-sanity";
-import { OfficeBearer } from "@/sanity/types";
-import imageUrlBuilder from "@sanity/image-url";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import Image from "next/image";
+import { urlFor } from "../constants/sanity";
 
 const DIRECTOR_FETCH_QUERY = defineQuery(`*[
   _type == "officeBearer" && designation == "Director"
@@ -15,12 +13,6 @@ const DIRECTOR_FETCH_QUERY = defineQuery(`*[
   image
 }`);
 
-const { projectId, dataset } = client.config();
-
-const urlFor = (source: SanityImageSource) =>
-  projectId && dataset
-    ? imageUrlBuilder({ projectId, dataset }).image(source)
-    : null;
 
 export default async function DirectorNote() {
   try {
@@ -56,13 +48,13 @@ export default async function DirectorNote() {
         </div>
 
         {/* Director's Image Section */}
-        <div className="max-w-[403px]">
+        <div className="max-w-[403px] w-full">
           <Image
             src={imgURL || "https://placehold.co/550x310/png"}
             alt={director.name || "Director"}
             width={403}
             height={345}
-            className="rounded-lg"
+            className="rounded-lg w-full h-auto"
           />
         </div>
       </div>
