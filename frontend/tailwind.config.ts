@@ -49,7 +49,10 @@ export default {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
+  			},
+			darkblue:{
+				DEFAULT: "#00194E"
+			}
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
