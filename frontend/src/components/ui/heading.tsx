@@ -9,7 +9,7 @@ const Heading = ({
 }) => {
   return (
     <div
-      className={`text-4xl sm:text-6xl md:text-8xl underline decoration-[3px] font-dmSerifDisplay ${className}`}
+      className={`text-4xl sm:text-5xl md:text-6xl lg:text-8xl underline decoration-[3px] font-dmSerifDisplay ${className}`}
     >
       {children}
     </div>

@@ -9,7 +9,7 @@ const SubHeading = ({
 }) => {
   return (
     <div
-      className={`text-xl sm:text-4xl md:text-5xl font-dmSerifText ${className}`}
+      className={`text-xl sm:text-2xl md:text-3xl lg:text-5xl font-dmSerifText ${className}`}
     >
       {children}
     </div>
