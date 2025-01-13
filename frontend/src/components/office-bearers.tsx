@@ -15,16 +15,15 @@ export default function OfficeBearers({ officeBearers }: OfficeBearersProps) {
       </div>
     );
   }
-
-    return (
-      <div className="flex flex-col items-center p-8">
-        <SubHeading>Office Bearers</SubHeading>
-        {/* Images */}
-        <div className="flex flex-wrap justify-center gap-[101px] mx-16">
-          {officeBearers.map((bearer: OfficeBearer) => {
-            const imgURL = bearer.image
-              ? urlFor(bearer.image)?.url()
-              : "https://placehold.co/263x362/png";
+  return (
+    <div className="flex flex-col items-center p-8">
+      <SubHeading>Office Bearers</SubHeading>
+      {/* Images */}
+      <div className="flex flex-wrap justify-center gap-[101px] mx-16">
+        {officeBearers.map((bearer: OfficeBearer) => {
+          const imgURL = bearer.image
+            ? urlFor(bearer.image)?.url()
+            : "https://placehold.co/263x362/png";
 
           return (
             <div
@@ -39,7 +38,9 @@ export default function OfficeBearers({ officeBearers }: OfficeBearersProps) {
                 className="overflow-hidden"
               />
               <div className="space-y-2">
-                <Text className="font-semibold mt-4 text-lg">{bearer.name}</Text>
+                <Text className="font-semibold mt-4 text-lg">
+                  {bearer.name}
+                </Text>
                 <Text className="text-sm text-gray-600">
                   {bearer.designation}
                 </Text>

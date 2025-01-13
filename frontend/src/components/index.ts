@@ -5,7 +5,7 @@ import NavBar from "./navbar";
 import BlueButton from "./blue-button";
 import DirectorNote from "./director-note";
 import OfficeBearers from "./office-bearers";
-import OfficeBearersHome from "./office-bearers-home";
+import OfficeBearersAndAnnouncements from "./office-bearers-&-announcements";
 import AnnouncementCard from "./announcement";
 
 export {
@@ -17,5 +17,5 @@ export {
   BlueButton,
   DirectorNote,
   OfficeBearers,
-  OfficeBearersHome,
+  OfficeBearersAndAnnouncements,
 };
