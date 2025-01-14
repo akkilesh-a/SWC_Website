@@ -19,7 +19,7 @@ const ANNOUNCEMENTS_QUERY = defineQuery(
   }`,
 );
 
-export default async function AnnouncementCard() {
+export default async function Announcements() {
   const data: Announcement[] = await client.fetch(ANNOUNCEMENTS_QUERY);
 
   return (
@@ -29,7 +29,7 @@ export default async function AnnouncementCard() {
           Announcements
         </Heading>
       </div>
-      <div className="px-32 space-y-8 md:space-y-0 lg:px-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-items-start">
+      <div className="px-6 space-y-8 md:space-y-0 lg:px-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-items-start">
         {data.map((announcement, index) => {
           const imgURL = announcement.category
             ? urlFor(announcement.category)?.url()

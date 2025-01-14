@@ -3,7 +3,7 @@ import { defineQuery } from "next-sanity";
 import OfficeBearers from "./office-bearers";
 import DirectorNote from "./director-note";
 import { OfficeBearer } from "@/sanity/types";
-import AnnouncementCard from "./announcement";
+import Announcements from "./announcement";
 
 const ALL_OFFICE_BEARERS_QUERY = defineQuery(`*[
   _type == "officeBearer"
@@ -27,7 +27,7 @@ export default async function OfficeBearersAndAnnouncements() {
     return (
       <div>
         <DirectorNote director={director} />
-        <AnnouncementCard />
+        <Announcements />
         <OfficeBearers officeBearers={officeBearers} />
       </div>
     );
