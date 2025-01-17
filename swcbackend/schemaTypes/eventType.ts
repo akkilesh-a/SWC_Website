@@ -58,8 +58,10 @@ export const eventType = defineType({
     }),
     defineField({
         name: 'description',
-        type: 'array', 
-        of: [{type: 'block'}]
+        type: 'string',
+        validation:(rule)=>rule
+        .max(80)
+        .error('Event Description should be less than 80 characters')
     }),
     defineField({
         name: 'venue',
@@ -79,6 +81,13 @@ export const eventType = defineType({
         name: 'entryFee',
         title:'Entry Fee',
         type: 'number'
+    }),
+    defineField({
+        name:"noOfParticipantsPerTeam",
+        type:"string",
+        validation:(rule)=>rule
+        .required()
+        .error('No of Participants required!')
     })
   ],
 })
