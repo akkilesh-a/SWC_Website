@@ -10,6 +10,8 @@ import {
   CardDescription,
   CardContent,
 } from "./card";
+import { Input } from "./input";
+
 export {
   Heading,
   Button,
@@ -21,4 +23,5 @@ export {
   CardTitle,
   CardDescription,
   CardContent,
+  Input,
 };
