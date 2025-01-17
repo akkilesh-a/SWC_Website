@@ -52,7 +52,7 @@ export const clubType = defineType({
       name:"clubType",
       type:"string",
       options:{
-        list:["Technical","Non Technical","Special Team","Chapter","Literary","Other"],
+        list:["Technical Club","Recreational Club","Special Team","Chapter","Literary Club","Other"],
         layout:"dropdown",
       },
       validation:(rule)=>rule
