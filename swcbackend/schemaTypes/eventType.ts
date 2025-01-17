@@ -59,9 +59,6 @@ export const eventType = defineType({
     defineField({
         name: 'description',
         type: 'string',
-        validation:(rule)=>rule
-        .max(80)
-        .error('Event Description should be less than 80 characters')
     }),
     defineField({
         name: 'venue',
