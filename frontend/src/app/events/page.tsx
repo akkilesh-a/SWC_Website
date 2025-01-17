@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { LandingImageWithContent } from "@/components";
@@ -6,9 +5,10 @@ import { client } from "@/sanity/client";
 import { Calendar, MapPin, Search, User } from "lucide-react";
 import { defineQuery } from "next-sanity";
 import Image from "next/image";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { urlFor } from "@/constants/sanity";
 import { Input } from "@/components/ui";
+import { Club, Event } from "@/sanity/types";
 
 const EVENTS_QUERY = defineQuery(`
   *[_type == "event"]{
@@ -28,9 +28,9 @@ const EVENTS_QUERY = defineQuery(`
 `);
 
 const EventsPage = () => {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filteredEvents, setFilteredEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -43,8 +43,8 @@ const EventsPage = () => {
   }, []);
 
   useEffect(() => {
-    const filteredData = events.filter((event: any) => {
-      return event.name.toLowerCase().includes(search.toLowerCase());
+    const filteredData = events.filter((event) => {
+      return event.name?.toLowerCase().includes(search.toLowerCase());
     });
     setFilteredEvents(filteredData);
   }, [search]);
@@ -72,7 +72,7 @@ const EventsPage = () => {
           {loading ? (
             <div>Loading...</div>
           ) : (
-            data.map((event: any) => {
+            data.map((event) => {
               return <PostersSection key={event._id} data={event} />;
             })
           )}
@@ -82,10 +82,12 @@ const EventsPage = () => {
   );
 };
 
-function PostersSection({ data }: { data: any }) {
+function PostersSection({ data }:{data:Event}) {
   const imgURL = data.poster
     ? urlFor(data.poster)?.url()
     : "https://placehold.co/550x310/png";
+  
+  const clubs = data.clubname as unknown as Club[];
 
   return (
     <div className="text-white flex flex-col items-center">
@@ -97,10 +99,10 @@ function PostersSection({ data }: { data: any }) {
               {data.name}
             </div>
             <div className="flex text-xs">
-              {data.clubname.map((club: any, index: number) => {
+              {clubs?.map((club, index) => {
                 return (
                   <span className="truncate" key={index}>
-                    {club.name} {index < data.clubname.length - 1 && ","}{" "}
+                    {club.name} {index < clubs.length - 1 && ","}{" "}
                   </span>
                 );
               })}
@@ -111,14 +113,14 @@ function PostersSection({ data }: { data: any }) {
           </div>
         </div>
         <div className="w-[70%] h-[5rem] text-[0.6rem] ">
-          {data.description.slice(0, 90)}...
+          {data.description && data.description.slice(0, 90)}...
         </div>
         <div className="flex justify-between text-[0.6rem]">
           <div className="flex items-center gap-2">
             <Calendar />
             <div className="space-y-2">
-              <div>{data.startDate.split("T")[0]}</div>
-              <div>{data.endDate.split("T")[0]}</div>
+              <div>{data.startDate?.split("T")[0]}</div>
+              <div>{data.endDate?.split("T")[0]}</div>
             </div>
           </div>
           <div className="space-y-2">

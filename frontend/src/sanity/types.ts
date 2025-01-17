@@ -130,31 +130,18 @@ export type Event = {
   _updatedAt: string;
   _rev: string;
   name?: string;
-  date?: string;
-  clubname?: {
+  typeOfEvent?: string;
+  startDate?: string;
+  endDate?: string;
+  clubname?: Array<{
     _ref: string;
     _type: "reference";
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "club";
-  };
-  description?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
     _key: string;
+    [internalGroqTypeReferenceTo]?: "club";
   }>;
+  description?: string;
+  venue?: string;
   poster?: {
     asset?: {
       _ref: string;
@@ -166,6 +153,8 @@ export type Event = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+  entryFee?: number;
+  noOfParticipantsPerTeam?: string;
 };
 
 export type Club = {
@@ -176,7 +165,6 @@ export type Club = {
   _rev: string;
   name?: string;
   description?: string;
-  category?: string;
   logo?: {
     asset?: {
       _ref: string;
@@ -188,6 +176,11 @@ export type Club = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+  faculty1?: string;
+  faculty1url?: string;
+  faculty2?: string;
+  faculty2url?: string;
+  clubType?: "Technical Club" | "Recreational Club" | "Special Team" | "Chapter" | "Literary Club" | "Other";
 };
 
 export type Announcement = {
@@ -223,6 +216,17 @@ export type OfficeBearer = {
   designation?: string;
   description?: string;
   image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  informalImage?: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -292,22 +296,5 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes =
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | SanityFileAsset
-  | Geopoint
-  | Slug
-  | Blog
-  | Newsletter
-  | Event
-  | Club
-  | Announcement
-  | OfficeBearer
-  | SanityImageCrop
-  | SanityImageHotspot
-  | SanityImageAsset
-  | SanityAssetSourceData
-  | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Blog | Newsletter | Event | Club | Announcement | OfficeBearer | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;

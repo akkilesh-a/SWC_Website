@@ -77,7 +77,8 @@ export const eventType = defineType({
     defineField({
         name: 'entryFee',
         title:'Entry Fee',
-        type: 'number'
+        type: 'number',
+        initialValue:0,
     }),
     defineField({
         name:"noOfParticipantsPerTeam",
