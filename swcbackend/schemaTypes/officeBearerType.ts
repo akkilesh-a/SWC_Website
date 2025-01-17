@@ -31,5 +31,12 @@ export const officeBearerType = defineType({
         .required()
         .error('Image Required')
     }),
+    defineField({
+        name: 'informalImage',
+        type: 'image',
+        validation:(rule)=>rule
+        .required()
+        .error('Informal Image Required')
+    })
   ],
 })
