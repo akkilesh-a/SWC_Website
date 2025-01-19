@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { urlFor } from "../constants/sanity";
-import { SubHeading, Text } from "./ui";
+import { Heading, Text } from "./ui";
 import { OfficeBearer } from "@/sanity/types";
 
 interface OfficeBearersProps {
@@ -17,7 +17,7 @@ export default function OfficeBearers({ officeBearers }: OfficeBearersProps) {
   }
   return (
     <div className="flex flex-col items-center p-8">
-      <SubHeading>Office Bearers</SubHeading>
+      <Heading>Office Bearers</Heading>
       {/* Images */}
       <div className="flex flex-wrap justify-center gap-[101px] mx-16">
         {officeBearers.map((bearer: OfficeBearer) => {

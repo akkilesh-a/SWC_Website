@@ -7,7 +7,13 @@ const Text = ({
   children?: ReactNode;
   className?: string;
 }) => {
-  return <div className={` ${className}`}>{children}</div>;
+  return (
+    <div
+      className={` text-xs font-newsreader sm:text-sm md:text-base lg:text-lg xl:text-xl ${className}`}
+    >
+      {children}
+    </div>
+  );
 };
 
 export default Text;

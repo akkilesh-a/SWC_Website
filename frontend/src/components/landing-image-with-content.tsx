@@ -52,8 +52,12 @@ export const LandingImageWithContent = ({
           <div
             className={`absolute space-y-2 top-10 lg:top-16 left-4 text-white ${className}`}
           >
-            <Heading>{heading}</Heading>
-            <SubHeading>{subheading}</SubHeading>
+            <div className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl underline decoration-[3px]">
+              {heading}
+            </div>
+            <div className="text-xl sm:text-2xl md:text-3xl lg:text-5xl SerifText">
+              {subheading}
+            </div>
           </div>
         )}
         {variant === "image" && image && (

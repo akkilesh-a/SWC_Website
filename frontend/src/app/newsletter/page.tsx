@@ -1,4 +1,5 @@
 import { LandingImageWithContent } from "@/components";
+import { Heading } from "@/components/ui";
 import { client } from "@/sanity/client";
 import { defineQuery } from "next-sanity";
 
@@ -36,9 +37,7 @@ async function NewsLettersPage() {
         />
       </div>
       <div className="bg-white flex space-y-8 flex-col items-center justify-center p-16">
-        <div className="text-3xl md:text-6xl font-bold underline font-dmSerifDisplay">
-          Latest Newsletter
-        </div>
+        <Heading>Latest Newsletter</Heading>
         <iframe
           className="bg-white border border-white w-[400px] sm:w-[600px] md:w-[1000px] h-[500px]"
           key={data[0]._id}

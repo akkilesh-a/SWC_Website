@@ -1,30 +1,18 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, DM_Serif_Text } from "next/font/google";
-import localFont from "next/font/local";
+import { DM_Serif_Text, Newsreader } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "@/components";
 
-const dmSerifDisplay = DM_Serif_Display({
+const newsreader = Newsreader({
   weight: "400",
   subsets: ["latin"],
-  variable: "--font-dm-serif-display",
+  variable: "--font-newsreader",
 });
 
 const dmSerifText = DM_Serif_Text({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-dm-serif-text",
-});
-
-const sansation = localFont({
-  src: [
-    {
-      path: "../fonts/sansation/Sansation_Regular.ttf",
-      weight: "400",
-      style: "normal",
-    },
-  ],
-  variable: "--font-sansation",
 });
 
 export const metadata: Metadata = {
@@ -40,9 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <link rel="icon" href="/favicon.png" />
-      <body
-        className={`${dmSerifDisplay.variable} ${dmSerifText.variable} ${sansation.variable}`}
-      >
+      <body className={`${dmSerifText.variable} ${newsreader.variable}`}>
         <NavBar />
         {children}
       </body>
