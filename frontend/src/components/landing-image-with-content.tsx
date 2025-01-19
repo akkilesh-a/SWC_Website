@@ -1,4 +1,3 @@
-import { Heading, SubHeading } from "./ui";
 import Image from "next/image";
 
 interface LandingImageWithContentProps {
