@@ -7,7 +7,13 @@ import { defineQuery } from "next-sanity";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { urlFor } from "@/constants/sanity";
-import { Input } from "@/components/ui";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogTitle,
+  Input,
+} from "@/components/ui";
 import { Club, Event } from "@/sanity/types";
 
 const EVENTS_QUERY = defineQuery(`
@@ -44,7 +50,10 @@ const EventsPage = () => {
 
   useEffect(() => {
     const filteredData = events.filter((event) => {
-      return event.name?.toLowerCase().includes(search.toLowerCase());
+      return (
+        event.name?.toLowerCase().includes(search.toLowerCase()) ||
+        event.venue?.toLowerCase().includes(search.toLowerCase())
+      );
     });
     setFilteredEvents(filteredData);
   }, [search]);
@@ -68,12 +77,14 @@ const EventsPage = () => {
           />
           <Search className="absolute left-2" />
         </div>
-        <div className="grid min-h-[100vh] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-16">
+        <div className="grid min-h-[100vh] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16">
           {loading ? (
             <div>Loading...</div>
           ) : (
             data.map((event) => {
-              return <PostersSection key={event._id} data={event} />;
+              return (
+                <EventPosterWithDetailsCard key={event._id} data={event} />
+              );
             })
           )}
         </div>
@@ -82,7 +93,7 @@ const EventsPage = () => {
   );
 };
 
-function PostersSection({ data }: { data: Event }) {
+function EventPosterWithDetailsCard({ data }: { data: Event }) {
   const imgURL = data.poster
     ? urlFor(data.poster)?.url()
     : "https://placehold.co/550x310/png";
@@ -90,67 +101,135 @@ function PostersSection({ data }: { data: Event }) {
   const clubs = data.clubname as unknown as Club[];
 
   return (
-    <div className="text-white flex flex-col items-center">
-      <Image src={imgURL!} alt="poster" className="" width={400} height={100} />
-      <div className="bg-darkblue w-full h-[10rem] p-2 flex flex-col justify-between">
-        <div className="flex justify-between">
-          <div>
-            <div className="w-[11rem] text-lg sm:text-sm text-white truncate font-bold ">
-              {data.name}
+    <Dialog>
+      <DialogTrigger>
+        <div className="text-white flex flex-col ">
+          <Image
+            src={imgURL!}
+            alt="poster"
+            className=""
+            width={400}
+            height={100}
+          />
+          <div className="bg-darkblue w-full h-[10rem] p-2 flex flex-col justify-between">
+            {/* Event Name and Clubs */}
+            <div className="flex text-left justify-between">
+              <div>
+                <div className="w-[11rem] text-lg sm:text-sm text-white truncate font-bold ">
+                  {data.name}
+                </div>
+                {clubs?.map((club, index) => {
+                  return (
+                    <div className="text-xs" key={index}>
+                      {club.name} {index < clubs.length - 1 && ","}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="text-xl font-bold">
+                {data.entryFee != 0 ? "$" + data.entryFee : "Free"}
+              </div>
             </div>
-            <div className="text-xs">
-              {clubs?.map((club, index) => {
-                return (
-                  <div className="truncate" key={index}>
-                    {club.name} {index < clubs.length - 1 && ","}{" "}
+
+            {/* Date and Time */}
+            <div className="flex justify-between text-sm sm:text-[0.6rem]">
+              <div className="flex items-center gap-2">
+                <Calendar />
+                <div className="space-y-2">
+                  <div>
+                    {data.startDate
+                      ? new Date(data.startDate).toLocaleDateString("en-GB", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "2-digit",
+                        })
+                      : ""}
                   </div>
-                );
-              })}
+                  <div>
+                    {data.endDate
+                      ? new Date(data.endDate).toLocaleDateString("en-GB", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "2-digit",
+                        })
+                      : ""}
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center justify-end gap-2 text-xs">
+                  <User /> {data.noOfParticipantsPerTeam}
+                </div>
+                <div className="flex items-center justify-end gap-2">
+                  <MapPin /> {data.venue?.slice(0, 1).toUpperCase()}
+                  {data.venue?.slice(1, 20)}
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="text-sm font-bold">
-            {data.entryFee != 0 ? "$" + data.entryFee : "Free"}
           </div>
         </div>
-        {/* <div className="w-[70%] h-[5rem] text-[0.6rem] ">
-          {data.description && data.description.slice(0, 90)}...
-        </div> */}
-        <div className="flex justify-between text-sm sm:text-[0.6rem]">
-          <div className="flex items-center gap-2">
-            <Calendar />
-            <div className="space-y-2">
-              <div>
-                {data.startDate
-                  ? new Date(data.startDate).toLocaleDateString("en-GB", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "2-digit",
-                    })
-                  : ""}
-              </div>
-              <div>
-                {data.endDate
-                  ? new Date(data.endDate).toLocaleDateString("en-GB", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "2-digit",
-                    })
-                  : ""}
-              </div>
-            </div>
-          </div>
+      </DialogTrigger>
+      <DialogContent className="grid grid-cols-1 md:grid-cols-2  justify-center space-x-4 md:space-x-16 min-w-[70vw] max-w-[90vw] h-[90vh]">
+        <DialogTitle className="flex justify-center items-center overflow-auto">
+          <Image
+            src={imgURL!}
+            alt={data.name + " Poster"}
+            className="sm:block hidden"
+            width={500}
+            height={1000}
+          />
+          <Image
+            src={imgURL!}
+            alt={data.name + " Poster"}
+            className="block sm:hidden"
+            width={400}
+            height={1000}
+          />
+        </DialogTitle>
+        <div className="flex flex-col justify-between space-y-4">
           <div className="space-y-2">
-            <div className="flex items-center justify-end gap-2 text-xs">
-              <User /> {data.noOfParticipantsPerTeam}
+            <div className="text-xl sm:text-4xl font-semibold">{data.name}</div>
+            <div className="text-sm sm:text-base text-left">
+              {data.description}
             </div>
-            <div className="flex items-center justify-end gap-2">
-              <MapPin /> {data.venue?.slice(0, 1).toUpperCase()}
-              {data.venue?.slice(1, 20)}
+          </div>
+          <div className="flex justify-between">
+            <div className="flex items-center gap-2">
+              <Calendar className="sm:w-10 sm:h-10 w-8 h-8" />
+              <div className="flex flex-col">
+                <div>
+                  {data.startDate
+                    ? new Date(data.startDate).toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "2-digit",
+                      })
+                    : ""}
+                </div>
+                <div>
+                  {data.endDate
+                    ? new Date(data.endDate).toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "2-digit",
+                      })
+                    : ""}
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <MapPin className="sm:w-10 sm:h-10 w-8 h-8" />
+              <div className="flex flex-col">
+                <div>
+                  {data.venue?.slice(0, 1).toUpperCase()}
+                  {data.venue?.slice(1, 20)}
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }
 

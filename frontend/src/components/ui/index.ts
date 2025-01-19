@@ -11,6 +11,15 @@ import {
   CardContent,
 } from "./card";
 import { Input } from "./input";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./dialog";
 
 export {
   Heading,
@@ -24,4 +33,11 @@ export {
   CardDescription,
   CardContent,
   Input,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 };
