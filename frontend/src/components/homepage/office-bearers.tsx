@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { urlFor } from "../constants/sanity";
-import { Heading, Text } from "./ui";
+import { urlFor } from "../../constants/sanity";
+import { Heading, Text } from "../ui";
 import { OfficeBearer } from "@/sanity/types";
 
 interface OfficeBearersProps {

@@ -2,8 +2,15 @@ import { client } from "@/sanity/client";
 import { defineQuery } from "next-sanity";
 import React from "react";
 import Image from "next/image";
-import { urlFor } from "../constants/sanity";
-import { Heading, Text, Card, CardHeader, CardContent, SubHeading } from "./ui";
+import { urlFor } from "../../constants/sanity";
+import {
+  Heading,
+  Text,
+  Card,
+  CardHeader,
+  CardContent,
+  SubHeading,
+} from "../ui";
 import { Announcement } from "@/sanity/types";
 import Link from "next/link";
 import { ArrowUpRightFromSquare } from "lucide-react";

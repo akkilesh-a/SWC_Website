@@ -1,12 +1,9 @@
-import CustomComponent from "./custom-component";
-import SanityExample from "./sanity-example";
+import CustomComponent from "./examples/custom-component";
+import SanityExample from "./examples/sanity-example";
 import { LandingImageWithContent } from "./landing-image-with-content";
 import NavBar from "./navbar";
 import BlueButton from "./blue-button";
-import DirectorNote from "./director-note";
-import OfficeBearers from "./office-bearers";
-import OfficeBearersAndAnnouncements from "./office-bearers-&-announcements";
-import AnnouncementCard from "./announcement";
+import AnnouncementCard from "./homepage/announcement";
 
 export {
   CustomComponent,
@@ -15,7 +12,4 @@ export {
   NavBar,
   AnnouncementCard,
   BlueButton,
-  DirectorNote,
-  OfficeBearers,
-  OfficeBearersAndAnnouncements,
 };

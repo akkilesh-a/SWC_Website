@@ -1,8 +1,5 @@
-import {
-  BlueButton,
-  LandingImageWithContent,
-  OfficeBearersAndAnnouncements,
-} from "../components";
+import { BlueButton, LandingImageWithContent } from "../components";
+import { OfficeBearersAndAnnouncements } from "../components/homepage";
 import { Heading, Text } from "../components/ui";
 import React from "react";
 
