@@ -34,7 +34,12 @@ export default async function Announcements() {
       <div className="text-center">
         <Heading>Announcements</Heading>
       </div>
-      <Carousel>
+      <Carousel
+        opts={{
+          align: "start",
+          loop: true,
+        }}
+      >
         <CarouselContent>
           {data.map((announcement, index) => {
             return (
