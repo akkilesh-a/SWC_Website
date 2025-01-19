@@ -20,6 +20,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./dialog";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "./carousel";
 
 export {
   Heading,
@@ -40,4 +47,9 @@ export {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 };

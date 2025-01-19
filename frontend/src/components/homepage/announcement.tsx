@@ -4,16 +4,16 @@ import React from "react";
 import Image from "next/image";
 import { urlFor } from "../../constants/sanity";
 import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
   Heading,
   Text,
-  Card,
-  CardHeader,
-  CardContent,
-  SubHeading,
 } from "../ui";
 import { Announcement } from "@/sanity/types";
-import Link from "next/link";
-import { ArrowUpRightFromSquare } from "lucide-react";
+// import { Dot } from "lucide-react";
 
 const ANNOUNCEMENTS_QUERY = defineQuery(
   `*[_type == "announcement"]{
@@ -30,42 +30,59 @@ export default async function Announcements() {
   const data: Announcement[] = await client.fetch(ANNOUNCEMENTS_QUERY);
 
   return (
-    <div className="bg-gray-100 min-h-screen py-10">
-      <div className="mb-8 text-center">
+    <div className="bg-gray-100 py-10 space-y-10 px-16">
+      <div className="text-center">
         <Heading>Announcements</Heading>
       </div>
-      <div className="px-6 space-y-8 md:space-y-0 lg:px-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-items-start">
-        {data.map((announcement, index) => {
-          const imgURL = announcement.category
-            ? urlFor(announcement.category)?.url()
-            : "https://placehold.co/550x310/png";
-          return (
-            <Card key={index}>
-              <CardHeader className="flex justify-center">
-                <Image
-                  src={imgURL!}
-                  width={1000}
-                  height={200}
-                  className=""
-                  alt={announcement.title || "Announcement"}
-                />
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <SubHeading>{announcement.title}</SubHeading>
-                <Text>{announcement.description?.slice(0, 300)}...</Text>
-                <div className="flex justify-between items-center">
-                  <Text className="flex justify-end">
-                    {announcement.date?.slice(0, 10)}
-                  </Text>
-                  <Link href={`/announcement/${announcement._id}`}>
-                    <ArrowUpRightFromSquare className="text-blue-700 hover:text-blue-500" />
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+      <Carousel>
+        <CarouselContent>
+          {data.map((announcement, index) => {
+            return (
+              <CarouselItem
+                className="md:basis-1/2 lg:basis-1/2 xl:basis-1/3"
+                key={index}
+              >
+                <AnnouncementCard announcement={announcement} />
+              </CarouselItem>
+            );
+          })}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+        {/* <DotsThingy index={data.length} /> */}
+      </Carousel>
     </div>
   );
 }
+
+// const DotsThingy =({index}:{index:number})=>{
+//   return(
+//     <div className="flex gap-2">
+//       {Array.from({length:index}).map((_,index)=>{
+//         return <Dot key={index} className={index === index ? "bg-darkblue" : "bg-gray-300"}  />
+//       })}
+//     </div>
+//   )
+// }
+
+const AnnouncementCard = ({ announcement }: { announcement: Announcement }) => {
+  const imgURL = announcement.category
+    ? urlFor(announcement.category)?.url()
+    : "https://placehold.co/550x310/png";
+  return (
+    <div className="relative">
+      <div className="flex justify-center">
+        <Image
+          src={imgURL!}
+          width={400}
+          height={200}
+          className=""
+          alt={announcement.title || "Announcement"}
+        />
+      </div>
+      <div className="bg-darkblue absolute left-8 -bottom-1 h-16 md:h-24 w-64 md:w-96 flex items-center justify-left py-0 text-white px-2">
+        <Text>{announcement.title}</Text>
+      </div>
+    </div>
+  );
+};
