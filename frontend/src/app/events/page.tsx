@@ -127,15 +127,26 @@ function EventPosterWithDetailsCard({ data }: { data: Event }) {
                 })}
               </div>
               <div className="text-xl font-bold">
-                {data.entryFee != 0 ? "$" + data.entryFee : "Free"}
+                {data.entryFee != 0 ? "₹" + data.entryFee : "Free"}
               </div>
+            </div>
+            <div className="flex justify-between text-sm">
+              {data.typeOfEvent}
             </div>
 
             {/* Date and Time */}
-            <div className="flex justify-between text-sm sm:text-[0.6rem]">
+            <div className="flex justify-between text-sm sm:text-[0.65rem]">
               <div className="flex items-center gap-2">
-                <Calendar />
-                <div className="space-y-2">
+                <Calendar className="sm:w-10 sm:h-10 w-8 h-8" />
+                <div className="">
+                  {data.startDate?.slice(0, 10) ===
+                    data.endDate?.slice(0, 10) && (
+                    <div>
+                      {data.startDate?.slice(11, 16) +
+                        " - " +
+                        data.endDate?.slice(11, 16)}
+                    </div>
+                  )}
                   <div>
                     {data.startDate
                       ? new Date(data.startDate).toLocaleDateString("en-GB", {
@@ -145,15 +156,18 @@ function EventPosterWithDetailsCard({ data }: { data: Event }) {
                         })
                       : ""}
                   </div>
-                  <div>
-                    {data.endDate
-                      ? new Date(data.endDate).toLocaleDateString("en-GB", {
-                          day: "2-digit",
-                          month: "2-digit",
-                          year: "2-digit",
-                        })
-                      : ""}
-                  </div>
+                  {data.startDate?.slice(0, 10) !==
+                    data.endDate?.slice(0, 10) && (
+                    <div>
+                      {data.endDate
+                        ? new Date(data.endDate).toLocaleDateString("en-GB", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "2-digit",
+                          })
+                        : ""}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="space-y-2">
