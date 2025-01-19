@@ -180,7 +180,13 @@ export type Club = {
   faculty1url?: string;
   faculty2?: string;
   faculty2url?: string;
-  clubType?: "Technical Club" | "Recreational Club" | "Special Team" | "Chapter" | "Literary Club" | "Other";
+  clubType?:
+    | "Technical Club"
+    | "Recreational Club"
+    | "Special Team"
+    | "Chapter"
+    | "Literary Club"
+    | "Other";
 };
 
 export type Announcement = {
@@ -296,5 +302,22 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Blog | Newsletter | Event | Club | Announcement | OfficeBearer | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes =
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityFileAsset
+  | Geopoint
+  | Slug
+  | Blog
+  | Newsletter
+  | Event
+  | Club
+  | Announcement
+  | OfficeBearer
+  | SanityImageCrop
+  | SanityImageHotspot
+  | SanityImageAsset
+  | SanityAssetSourceData
+  | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
