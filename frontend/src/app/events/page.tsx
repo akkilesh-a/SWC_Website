@@ -68,7 +68,7 @@ const EventsPage = () => {
           />
           <Search className="absolute left-2" />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5  gap-16">
+        <div className="grid min-h-[100vh] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-16">
           {loading ? (
             <div>Loading...</div>
           ) : (
@@ -82,28 +82,28 @@ const EventsPage = () => {
   );
 };
 
-function PostersSection({ data }:{data:Event}) {
+function PostersSection({ data }: { data: Event }) {
   const imgURL = data.poster
     ? urlFor(data.poster)?.url()
     : "https://placehold.co/550x310/png";
-  
+
   const clubs = data.clubname as unknown as Club[];
 
   return (
     <div className="text-white flex flex-col items-center">
-      <Image src={imgURL!} alt="poster" className="" width={300} height={100} />
-      <div className="bg-darkblue h-[10rem] p-2 flex flex-col justify-between">
+      <Image src={imgURL!} alt="poster" className="" width={400} height={100} />
+      <div className="bg-darkblue w-full h-[10rem] p-2 flex flex-col justify-between">
         <div className="flex justify-between">
           <div>
-            <div className="w-[11rem] text-white truncate font-bold text-sm">
+            <div className="w-[11rem] text-lg sm:text-sm text-white truncate font-bold ">
               {data.name}
             </div>
-            <div className="flex text-xs">
+            <div className="text-xs">
               {clubs?.map((club, index) => {
                 return (
-                  <span className="truncate" key={index}>
+                  <div className="truncate" key={index}>
                     {club.name} {index < clubs.length - 1 && ","}{" "}
-                  </span>
+                  </div>
                 );
               })}
             </div>
@@ -112,15 +112,31 @@ function PostersSection({ data }:{data:Event}) {
             {data.entryFee != 0 ? "$" + data.entryFee : "Free"}
           </div>
         </div>
-        <div className="w-[70%] h-[5rem] text-[0.6rem] ">
+        {/* <div className="w-[70%] h-[5rem] text-[0.6rem] ">
           {data.description && data.description.slice(0, 90)}...
-        </div>
-        <div className="flex justify-between text-[0.6rem]">
+        </div> */}
+        <div className="flex justify-between text-sm sm:text-[0.6rem]">
           <div className="flex items-center gap-2">
             <Calendar />
             <div className="space-y-2">
-              <div>{data.startDate?.split("T")[0]}</div>
-              <div>{data.endDate?.split("T")[0]}</div>
+              <div>
+                {data.startDate
+                  ? new Date(data.startDate).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "2-digit",
+                    })
+                  : ""}
+              </div>
+              <div>
+                {data.endDate
+                  ? new Date(data.endDate).toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "2-digit",
+                    })
+                  : ""}
+              </div>
             </div>
           </div>
           <div className="space-y-2">
@@ -128,7 +144,8 @@ function PostersSection({ data }:{data:Event}) {
               <User /> {data.noOfParticipantsPerTeam}
             </div>
             <div className="flex items-center justify-end gap-2">
-              <MapPin /> {data.venue}
+              <MapPin /> {data.venue?.slice(0, 1).toUpperCase()}
+              {data.venue?.slice(1, 20)}
             </div>
           </div>
         </div>
