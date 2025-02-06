@@ -9,7 +9,7 @@ const Text = ({
 }) => {
   return (
     <div
-      className={` text-xs font-newsreader sm:text-sm md:text-base lg:text-lg xl:text-xl ${className}`}
+      className={`font-newsreader text-sm lg:text-base xl:text-lg ${className}`}
     >
       {children}
     </div>
