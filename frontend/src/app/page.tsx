@@ -1,6 +1,7 @@
 import { BlueButton, LandingImageWithContent } from "../components";
 import { OfficeBearersAndAnnouncements } from "../components/homepage";
 import { Heading, Text } from "../components/ui";
+import Footer from "../components/footer";
 import React from "react";
 
 const Home = () => {
@@ -14,6 +15,7 @@ const Home = () => {
       </div>
       <StudentWelfareCommitteeDescription />
       <OfficeBearersAndAnnouncements />
+      <Footer/>
     </div>
   );
 };
