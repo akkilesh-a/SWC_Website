@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Serif_Text, Newsreader } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "@/components";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const newsreader = Newsreader({
   weight: "400",
@@ -26,11 +27,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <link rel="icon" href="/favicon.png" />
+    <html lang="en" suppressHydrationWarning>
       <body className={`${dmSerifText.variable} ${newsreader.variable}`}>
-        <NavBar />
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system">
+          <NavBar />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

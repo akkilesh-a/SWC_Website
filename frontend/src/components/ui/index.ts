@@ -27,6 +27,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./carousel";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./dropdown-menu";
 
 export {
   Heading,
@@ -52,4 +60,10 @@ export {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 };

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useRef, useState, useEffect } from "react";
 import { Button } from "./ui";
+import { ModeToggle } from "./mode-toggle";
 
 const NavBarLinks = [
   {
@@ -72,6 +73,7 @@ const NavBar = () => {
             </Link>
           );
         })}
+        <ModeToggle />
       </div>
       <div className="md:hidden text-white">
         <Button
@@ -104,6 +106,7 @@ const NavBar = () => {
                 </Link>
               );
             })}
+            <ModeToggle />
           </div>
         </div>
       )}
