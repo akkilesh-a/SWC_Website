@@ -1,21 +1,23 @@
-import { BlueButton, LandingImageWithContent } from "../components";
+import React from "react";
+import { LandingImageWithContent } from "../components";
 import { OfficeBearersAndAnnouncements } from "../components/homepage";
 import { Heading, Text } from "../components/ui";
 import Footer from "../components/footer";
-import React from "react";
 
 const Home = () => {
   return (
     <div>
+      <LandingImageWithContent
+        variant="image"
+        image="/swc-logos/swc-logo-white.png"
+      />
+
       <div>
-        <LandingImageWithContent
-          variant="image"
-          image="/swc-logos/swc-logo-white.png"
-        />
+        <StudentWelfareCommitteeDescription />
       </div>
-      <StudentWelfareCommitteeDescription />
+
       <OfficeBearersAndAnnouncements />
-      <Footer/>
+      <Footer />
     </div>
   );
 };
@@ -35,7 +37,6 @@ const StudentWelfareCommitteeDescription = () => {
           facilisi. Pellentesque commodo facilisis tempus.
         </Text>
       </div>
-      <BlueButton>More About SWC</BlueButton>
     </div>
   );
 };
