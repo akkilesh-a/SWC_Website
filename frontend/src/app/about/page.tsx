@@ -71,17 +71,17 @@ const AboutPage = async () => {
       <div className="flex flex-col md:flex-row justify-center items-center">
         <Image
           src="/about/placeholder.png"
-          className=" mt-8 md:mt-0 w-1/2 h-1/2 md:w-[50vw]"
+          className=" mt-8 md:mt-0 w-1/2 h-1/2 md:w-[50vw] md:h-[100vh]"
           width={700}
           height={100}
           alt="About"
         />
-        <div className=" flex flex-col items-center justify-center text-center space-y-8  lg:px-16 lg:p-12 lg:w-auto">
+        <div className=" flex flex-col items-center justify-center text-center space-y-8">
           <div>
-            <Heading className=" hidden md:block text-center">
+            <Heading className=" hidden md:block text-center md:mb-2">
               Student Welfare Committee
             </Heading>
-            <div className="mt-8 px-8 md:space-y-0 md:mt-0 space-y-4">
+            <div className="mt-8 px-8 md:space-y-0 md:mt-0 space-y-4 md:w-[50vw]">
               <Text>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
                 sem ex, elementum eu velit ac, porta semper justo. Donec laoreet
@@ -104,10 +104,10 @@ const AboutPage = async () => {
         </div>
       </div>
       <Heading className="text-center py-2 md:hidden">Our Mission</Heading>
-      <div className="flex flex-col-reverse md:flex-row justify-center items-center mt-2 md:space-y-0 md:space-x-0">
+      <div className="flex flex-col-reverse md:flex-row justify-center items-center mt-2 md:space-y-0 md:mt-0 md:space-x-0">
         <div className="text-center mt-4">
           <Heading className="hidden md:block">Our Mission</Heading>
-          <div className="space-y-4 px-8 md:space-y-0">
+          <div className="space-y-4 px-8 md:space-y-0 md:w-[50vw]">
             <Text>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sem
               ex, elementum eu velit ac, porta semper justo. Donec laoreet
@@ -129,7 +129,7 @@ const AboutPage = async () => {
         </div>
         <Image
           src="/about/placeholder.png"
-          className="w-1/2 h-1/2"
+          className="w-1/2 h-1/2 md:w-[50vw] md:h-[100vh]"
           width={800}
           height={100}
           alt="About"
