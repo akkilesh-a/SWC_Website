@@ -6,6 +6,7 @@ import Link from "next/link";
 import React, { useRef, useState, useEffect } from "react";
 import { Button } from "./ui";
 import { ModeToggle } from "./mode-toggle";
+import {motion} from "motion/react"
 
 const NavBarLinks = [
   {
@@ -23,10 +24,6 @@ const NavBarLinks = [
   {
     text: "News Letter",
     url: "/newsletter",
-  },
-  {
-    text: "TBD",
-    url: "/tbd",
   },
   {
     text: "Clubs",
@@ -54,7 +51,7 @@ const NavBar = () => {
   }, [ref, showHam]);
 
   return (
-    <div className="bg-darkblue dark:bg-transparent flex justify-between items-center h-[8vh] px-4 text-white">
+    <motion.div className="bg-darkblue dark:bg-transparent flex justify-between items-center h-[8vh] px-4 text-white">
       <Link href="/">
         <Image
           className="dark:hidden"
@@ -118,7 +115,7 @@ const NavBar = () => {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

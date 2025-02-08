@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { Button, Text } from "../ui";
 
 const ScrollToDescriptionButton = () => {
   const scrollToDescription = () => {
@@ -11,14 +12,15 @@ const ScrollToDescriptionButton = () => {
   };
 
   return (
-    <button
-      className="absolute bottom-0 w-[85px] h-[24px] sm:w-[100px] sm:h-[40px] md:w-[120px] md:h-[46px] lg:w-[140px] lg:h-[52px] xl:w-[161px] xl:h-[57px] left-1/2 transform -translate-x-1/2 bg-[#FFFFFFD4] hover:bg-[#FFFFFFD4] text-black p-2 sm:p-3 md:p-4 rounded-t-[11px] rounded-b-none"
+    <Button
+      variant="secondary"
+      className="absolute bottom-0 left-[50%] -translate-x-1/2 font-bold rounded-t-xl rounded-b-none dark:bg-[#09090b] dark:text-white px-8 py-6"
       onClick={scrollToDescription}
     >
-      <div className="font-inter text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-semibold">
+      <Text>
         See more
-      </div>
-    </button>
+      </Text>
+    </Button>
   );
 };
 

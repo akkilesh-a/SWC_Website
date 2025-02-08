@@ -1,7 +1,10 @@
+'use client'
+
 import Image from "next/image";
 import { urlFor } from "../../constants/sanity";
 import { Heading } from "../ui";
 import { OfficeBearer } from "@/sanity/types";
+import {motion} from "motion/react"
 
 interface OfficeBearersProps {
   officeBearers: OfficeBearer[];
@@ -31,7 +34,11 @@ export default function OfficeBearers({ officeBearers }: OfficeBearersProps) {
       {/* First Row: Director */}
       {director && (
         <div className="flex justify-center mb-8">
-          <div className="flex flex-col space-y-4 items-center text-center">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, type: "spring" }}
+            className="flex flex-col space-y-4 items-center text-center">
             <Image
               src={
                 director.image
@@ -48,7 +55,7 @@ export default function OfficeBearers({ officeBearers }: OfficeBearersProps) {
               <p className="font-semibold mt-4 text-3xl">{director.name}</p>
               <p className="text-2xl text-gray-600">{director.designation}</p>
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
 
@@ -60,7 +67,10 @@ export default function OfficeBearers({ officeBearers }: OfficeBearersProps) {
             : "https://placehold.co/263x362/png";
 
           return (
-            <div
+            <motion.div
+              initial={{ opacity: 0, y: 150 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, type: "spring" }}
               key={bearer._id}
               className="flex flex-col space-y-4 items-center text-center"
             >
@@ -75,7 +85,7 @@ export default function OfficeBearers({ officeBearers }: OfficeBearersProps) {
                 <p className="font-semibold mt-4 text-2xl">{bearer.name}</p>
                 <p className="text-lg text-gray-600">{bearer.designation}</p>
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>
