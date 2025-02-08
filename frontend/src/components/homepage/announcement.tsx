@@ -1,8 +1,8 @@
 import { client } from "@/sanity/client";
 import { defineQuery } from "next-sanity";
 import React from "react";
-import Image from "next/image";
-import { urlFor } from "../../constants/sanity";
+// import Image from "next/image";
+// import { urlFor } from "../../constants/sanity";
 import {
   Carousel,
   CarouselContent,
@@ -71,9 +71,9 @@ export default async function Announcements() {
 // }
 
 const AnnouncementCard = ({ announcement }: { announcement: Announcement }) => {
-  const imgURL = announcement.category
-    ? urlFor(announcement.category)?.url()
-    : "https://placehold.co/550x310/png";
+  // const imgURL = announcement.category
+  //   ? urlFor(announcement.category)?.url()
+  //   : "https://placehold.co/550x310/png";
   return (
     <div className="relative">
       <div className="flex justify-center">
