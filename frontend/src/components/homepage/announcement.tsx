@@ -30,7 +30,7 @@ export default async function Announcements() {
   const data: Announcement[] = await client.fetch(ANNOUNCEMENTS_QUERY);
 
   return (
-    <div className="bg-gray-100 py-10 space-y-10 px-16">
+    <div className="bg-gray-100 dark:bg-transparent py-10 space-y-10 px-16">
       <div className="text-center">
         <Heading>Announcements</Heading>
       </div>
@@ -77,15 +77,18 @@ const AnnouncementCard = ({ announcement }: { announcement: Announcement }) => {
   return (
     <div className="relative">
       <div className="flex justify-center">
-        <Image
+        {/* <Image
           src={imgURL!}
           width={400}
           height={200}
           className=""
           alt={announcement.title || "Announcement"}
-        />
+        /> */}
       </div>
-      <div className="bg-darkblue absolute left-8 -bottom-1 h-16 md:h-24 w-64 md:w-96 flex items-center justify-left py-0 text-white px-2">
+      {/* <div className="bg-darkblue absolute left-8 -bottom-1 h-16 md:h-24 w-64 md:w-96 flex items-center justify-left py-0 text-white px-2">
+        <Text>{announcement.title}</Text>
+      </div> */}
+      <div className="bg-darkblue h-32 flex items-center justify-left py-4 text-white px-2">
         <Text>{announcement.title}</Text>
       </div>
     </div>
