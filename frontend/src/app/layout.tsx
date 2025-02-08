@@ -3,6 +3,7 @@ import { DM_Serif_Text, Newsreader } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "@/components";
 import { ThemeProvider } from "@/components/theme-provider";
+import Footer from "@/components/footer";
 
 const newsreader = Newsreader({
   weight: "400",
@@ -33,6 +34,7 @@ export default function RootLayout({
           <NavBar />
           {children}
         </ThemeProvider>
+        <Footer />
       </body>
     </html>
   );

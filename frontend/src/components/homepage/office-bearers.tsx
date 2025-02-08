@@ -18,10 +18,10 @@ export default function OfficeBearers({ officeBearers }: OfficeBearersProps) {
 
   // Separate the director from other office bearers
   const director = officeBearers.find(
-    (bearer) => bearer.designation === "Director",
+    (bearer) => bearer.designation === "Director"
   );
   const otherBearers = officeBearers.filter(
-    (bearer) => bearer.designation !== "Director",
+    (bearer) => bearer.designation !== "Director"
   );
 
   return (
@@ -52,8 +52,8 @@ export default function OfficeBearers({ officeBearers }: OfficeBearersProps) {
         </div>
       )}
 
-      {/* Second Row: Other Office Bearers */}
-      <div className="flex flex-wrap justify-center gap-[101px] mx-16">
+      {/* Second Row: Other Office Bearers*/}
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mx-16">
         {otherBearers.map((bearer: OfficeBearer) => {
           const imgURL = bearer.image
             ? urlFor(bearer.image)?.url()
