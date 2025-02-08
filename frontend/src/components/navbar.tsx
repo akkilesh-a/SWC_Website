@@ -55,7 +55,7 @@ const NavBar = () => {
 
   return (
     <div className="bg-darkblue dark:bg-transparent flex justify-between items-center h-[8vh] px-4 text-white">
-      <a href="/">
+      <Link href="/">
         <Image
           className="dark:hidden"
           src="/swc-logos/swc-logo-white-cropped.png"
@@ -70,7 +70,7 @@ const NavBar = () => {
           height={100}
           width={200}
         />
-      </a>
+      </Link>
       <div
         className={`hidden md:flex gap-x-10 items-center px-8 font-sansation`}
       >
