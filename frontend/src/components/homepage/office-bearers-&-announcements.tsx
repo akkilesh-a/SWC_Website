@@ -21,9 +21,7 @@ export default async function OfficeBearersAndAnnouncements() {
     const director = data.find(
       (bearer: OfficeBearer) => bearer.designation === "Director",
     );
-    const officeBearers = data.filter(
-      (bearer: OfficeBearer) => bearer.designation !== "Director",
-    );
+    const officeBearers = data;
     return (
       <div>
         <DirectorNote director={director} />
