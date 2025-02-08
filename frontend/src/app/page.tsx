@@ -22,7 +22,7 @@ const Home = () => {
 
 const StudentWelfareCommitteeDescription = () => {
   return (
-    <div id="swc-description" className="text-center flex flex-col items-center space-y-4 p-16 bg-[#F6F6F6] dark:bg-transparent">
+    <div id="swc-description" className="text-center flex flex-col justify-center items-center space-y-4 p-16 bg-[#F6F6F6] dark:bg-transparent">
       <Heading>Student Welfare Committee</Heading>
       <div className="md:w-[500px] lg:w-[1100px] font-inter ">
         <Text className="text-balance">
