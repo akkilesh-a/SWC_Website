@@ -6,7 +6,7 @@ import Link from "next/link";
 import React, { useRef, useState, useEffect } from "react";
 import { Button } from "./ui";
 import { ModeToggle } from "./mode-toggle";
-import {motion} from "motion/react"
+import { motion, useScroll, useMotionValueEvent } from "motion/react";
 
 const NavBarLinks = [
   {
@@ -50,8 +50,23 @@ const NavBar = () => {
     };
   }, [ref, showHam]);
 
+  const { scrollY } = useScroll();
+  const [scrollDirection, setScrollDirection] = useState("down");
+
+  useMotionValueEvent(scrollY, "change", (current) => {
+    // @ts-expect-error - getPrevious can't be imported or typed
+    const diff = current - scrollY.getPrevious();
+    setScrollDirection(diff > 0 ? "down" : "up");
+  });
+
   return (
-    <motion.div className="bg-darkblue dark:bg-transparent flex justify-between items-center h-[8vh] px-4 text-white">
+    <motion.div
+      initial={{ scaleY: 0 }}
+      animate={{ scaleY: scrollDirection === "up" ? 1 : 0 }}
+      transition={{ duration: 0.3 }}
+      style={{ originY: 0 }}
+      className={`bg-darkblue dark:bg-black z-50 flex fixed top-0 left-0 w-screen justify-between items-center h-[8vh] px-4 text-white`}
+    >
       <Link href="/">
         <Image
           className="dark:hidden"
@@ -61,28 +76,30 @@ const NavBar = () => {
           width={200}
         />
         <Image
-          className="hidden dark:block"
+          className="hidden dark:block w-auto h-[25vh]"
           src="/swc-logos/swc-logo-gold.png"
           alt="logo"
-          height={100}
-          width={200}
+          height={10}
+          width={20}
         />
       </Link>
       <div
         className={`hidden md:flex gap-x-10 items-center px-8 font-sansation`}
       >
-        {NavBarLinks.map((link, index) => {
-          return (
-            <Link key={index} className="text-white dark:text-[#c6901e] dark:font-bold" href={link.url}>
-              {link.text}
-            </Link>
-          );
-        })}
+        {NavBarLinks.map((link, index) => (
+          <Link
+            key={index}
+            className="text-white dark:text-[#c6901e] dark:font-bold"
+            href={link.url}
+          >
+            {link.text}
+          </Link>
+        ))}
         <ModeToggle />
       </div>
       <div className="md:hidden text-white">
         <Button
-          className="bg-darkblue p-2 border rounded-lg hover:bg-blue-900"
+          className="bg-darkblue dark:bg-transparent dark:text-white rounded-lg hover:bg-blue-900"
           onClick={() => setshowHam((val) => !val)}
           size="icon"
           type="button"
@@ -91,12 +108,15 @@ const NavBar = () => {
         </Button>
       </div>
       {showHam && (
-        <div
-          className="bg-darkblue md:hidden absolute right-0 top-0 z-40 h-full w-80 px-8 py-4 rounded-lg"
+        <motion.div
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-darkblue/95 dark:bg-black/90 h-screen md:hidden absolute right-0 top-0 z-50  w-80 px-8 py-4 rounded-lg"
           ref={ref}
         >
           <Button
-            className="bg-darkblue p-2 rounded-lg hover:bg-blue-900"
+            className="bg-darkblue dark:bg-transparent dark:text-white rounded-lg hover:bg-blue-900"
             onClick={() => setshowHam((val) => !val)}
             size="icon"
             type="button"
@@ -104,32 +124,20 @@ const NavBar = () => {
             <ArrowLeftSquare />
           </Button>
           <div className="flex flex-col gap-y-8 items-center">
-            {NavBarLinks.map((link, index) => {
-              return (
-                <Link key={index} className="" href={link.url}>
-                  {link.text}
-                </Link>
-              );
-            })}
+            {NavBarLinks.map((link, index) => (
+              <Link key={index} className="" href={link.url}>
+                {link.text}
+              </Link>
+            ))}
             <ModeToggle />
           </div>
-        </div>
+        </motion.div>
       )}
     </motion.div>
   );
 };
 
 export default NavBar;
-
-
-
-
-
-
-
-
-
-
 
 // "use client";
 

@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
 import React from "react";
 import Image from "next/image";
 import ScrollToDescriptionButton from "./homepage/scroll-to-description";
-import {motion} from "motion/react"
+import { motion } from "motion/react";
 
 interface LandingImageWithContentProps {
   image?: string;
@@ -24,8 +24,8 @@ export const LandingImageWithContent = ({
     <div>
       <div>
         <div>
-            <Image
-            className="w-[100vw] h-[92vh]"
+          <Image
+            className="w-[100vw] h-dvh"
             src="/vit-chennai-campus.png"
             width={900}
             height={100}
@@ -34,15 +34,16 @@ export const LandingImageWithContent = ({
         </div>
         <motion.div
           initial={{
-            opacity:0
+            opacity: 0,
           }}
           animate={{
-            opacity:1
+            opacity: 1,
           }}
           transition={{
-            duration:1
+            duration: 1,
           }}
-          className="absolute top-[250px]">
+          className="absolute top-[250px]"
+        >
           <Image
             className="md:hidden"
             src="/home-page-trapezium.png"
