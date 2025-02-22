@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { client } from "@/sanity/client";
 import { defineQuery } from "next-sanity";
@@ -15,7 +15,7 @@ import {
   Text,
 } from "../ui";
 import { Announcement } from "@/sanity/types";
-import Autoplay from "embla-carousel-autoplay"
+import Autoplay from "embla-carousel-autoplay";
 
 // import { Dot } from "lucide-react";
 
@@ -31,106 +31,61 @@ const ANNOUNCEMENTS_QUERY = defineQuery(
 );
 
 const Announcements = () => {
-  const [announcementsData, setAnnouncementsData] = useState<Announcement[]>([])
-  const [loading, setLoading] = useState(true)
+  const [announcementsData, setAnnouncementsData] = useState<Announcement[]>(
+    [],
+  );
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchAnnouncements() {
-      const data = await  client.fetch(ANNOUNCEMENTS_QUERY)
-      setAnnouncementsData(data)
-      setLoading(false)
+      const data = await client.fetch(ANNOUNCEMENTS_QUERY);
+      setAnnouncementsData(data);
+      setLoading(false);
     }
-    fetchAnnouncements()
-  }, [])
-  
+    fetchAnnouncements();
+  }, []);
 
   return (
-    <div>
-      <div className="text-center py-24 space-y-8">
-        <Heading>Announcements</Heading>
-        {loading ?
-          <div className="flex justify-center items-center h-screen ">
-            Loading..
-          </div>
-          :
-          <Carousel
-            plugins={[
-              Autoplay({
-                delay: 2000,
-              }),
-            ]}
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-          >
-            <CarouselContent>
-              {announcementsData.map((announcement, index) => {
-                return (
-                  <CarouselItem
-                    className="md:basis-1/2 lg:basis-1/2 xl:basis-1/3"
-                    key={index}
-                  >
-                    <AnnouncementCard announcement={announcement} />
-                  </CarouselItem>
-                );
-              })}
-            </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
-            {/* <DotsThingy index={data.length} /> */}
-          </Carousel> 
-        }
-      </div>
+    <div className="md:px-16 lg:px-28 xl:px-40 py-16 text-center space-y-8">
+      <Heading>Announcements</Heading>
+      {loading ? (
+        <div className="flex justify-center items-center h-screen ">
+          Loading..
+        </div>
+      ) : (
+        <Carousel
+          plugins={[
+            Autoplay({
+              delay: 2000,
+            }),
+          ]}
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+        >
+          <CarouselContent>
+            {announcementsData.map((announcement, index) => {
+              return (
+                <CarouselItem
+                  className="md:basis-1/2 lg:basis-1/2 xl:basis-1/3"
+                  key={index}
+                >
+                  <AnnouncementCard announcement={announcement} />
+                </CarouselItem>
+              );
+            })}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+          {/* <DotsThingy index={data.length} /> */}
+        </Carousel>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Announcements
-
-// export default async function Announcements() {
-//   const data: Announcement[] = await client.fetch(ANNOUNCEMENTS_QUERY);
-
-//   return (
-//     <div className="bg-gray-100 dark:bg-transparent py-10 space-y-10 px-16">
-//       <div className="text-center">
-//         <Heading>Announcements</Heading>
-//       </div>
-//       <Carousel
-//         opts={{
-//           align: "start",
-//           loop: true,
-//         }}
-//       >
-//         <CarouselContent>
-//           {data.map((announcement, index) => {
-//             return (
-//               <CarouselItem
-//                 className="md:basis-1/2 lg:basis-1/2 xl:basis-1/3"
-//                 key={index}
-//               >
-//                 <AnnouncementCard announcement={announcement} />
-//               </CarouselItem>
-//             );
-//           })}
-//         </CarouselContent>
-//         <CarouselPrevious />
-//         <CarouselNext />
-//         {/* <DotsThingy index={data.length} /> */}
-//       </Carousel>
-//     </div>
-//   );
-// }
-
-// const DotsThingy =({index}:{index:number})=>{
-//   return(
-//     <div className="flex gap-2">
-//       {Array.from({length:index}).map((_,index)=>{
-//         return <Dot key={index} className={index === index ? "bg-darkblue" : "bg-gray-300"}  />
-//       })}
-//     </div>
-//   )
-// }
+export default Announcements;
 
 const AnnouncementCard = ({ announcement }: { announcement: Announcement }) => {
   // const imgURL = announcement.category

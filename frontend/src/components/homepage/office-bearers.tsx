@@ -35,9 +35,6 @@ export default function OfficeBearers({ officeBearers }: OfficeBearersProps) {
       {director && (
         <div className="flex justify-center mb-8">
           <motion.div 
-            initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, type: "spring" }}
             className="flex flex-col space-y-4 items-center text-center">
             <Image
               src={
@@ -68,7 +65,7 @@ export default function OfficeBearers({ officeBearers }: OfficeBearersProps) {
 
           return (
             <motion.div
-              initial={{ opacity: 0, y: 150 }}
+              initial={{ opacity: 0, y: 150}}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, type: "spring" }}
               key={bearer._id}
