@@ -14,7 +14,9 @@ import {
 } from "../ui";
 import { Announcement } from "@/sanity/types";
 import Autoplay from "embla-carousel-autoplay";
+import { type UseEmblaCarouselType } from "embla-carousel-react";
 
+type CarouselApi = UseEmblaCarouselType[1];
 const ANNOUNCEMENTS_QUERY = defineQuery(
   `*[_type == "announcement"]{
     _id,
@@ -33,7 +35,7 @@ const Announcements = () => {
   const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const handleSetApi = (api: any) => {
+  const handleSetApi = (api: CarouselApi | null) => {
     if (!api) return;
 
     setActiveIndex(api.selectedScrollSnap());
