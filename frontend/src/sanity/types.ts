@@ -74,6 +74,29 @@ export type Slug = {
   source?: string;
 };
 
+export type Venue = {
+  _id: string;
+  _type: "venue";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  venueImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  venueName?: string;
+  academicBlock?: string;
+  locationLink?: string;
+  capacity?: number;
+};
+
 export type Blog = {
   _id: string;
   _type: "blog";
@@ -130,18 +153,51 @@ export type Event = {
   _updatedAt: string;
   _rev: string;
   name?: string;
-  typeOfEvent?: string;
-  startDate?: string;
-  endDate?: string;
-  clubname?: Array<{
+  isCollab?: boolean;
+  clubname?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "club";
+  };
+  clubnames?: Array<{
     _ref: string;
     _type: "reference";
     _weak?: boolean;
     _key: string;
     [internalGroqTypeReferenceTo]?: "club";
   }>;
-  description?: string;
-  venue?: string;
+  typeOfEvent?: Array<string>;
+  customEventType?: string;
+  startDate?: string;
+  endDate?: string;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  customVenueOption?: boolean;
+  venue?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "venue";
+  }>;
+  customVenue?: string;
   poster?: {
     asset?: {
       _ref: string;
@@ -164,6 +220,7 @@ export type Club = {
   _updatedAt: string;
   _rev: string;
   name?: string;
+  abbreviation?: string;
   description?: string;
   logo?: {
     asset?: {
@@ -180,13 +237,7 @@ export type Club = {
   faculty1url?: string;
   faculty2?: string;
   faculty2url?: string;
-  clubType?:
-    | "Technical Club"
-    | "Recreational Club"
-    | "Special Team"
-    | "Chapter"
-    | "Literary Club"
-    | "Other";
+  clubType?: "Technical Club" | "Recreational Club" | "Special Team" | "Chapter" | "Literary Club" | "Other";
 };
 
 export type Announcement = {
@@ -302,22 +353,192 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes =
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | SanityFileAsset
-  | Geopoint
-  | Slug
-  | Blog
-  | Newsletter
-  | Event
-  | Club
-  | Announcement
-  | OfficeBearer
-  | SanityImageCrop
-  | SanityImageHotspot
-  | SanityImageAsset
-  | SanityAssetSourceData
-  | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Venue | Blog | Newsletter | Event | Club | Announcement | OfficeBearer | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ../frontend/src/app/about/page.tsx
+// Variable: OFFICE_BEARERS_QUERY
+// Query: *[  _type == "officeBearer" && designation != "Director"  ]{    _id,    name,    designation,    description,    image,     informalImage  }
+export type OFFICE_BEARERS_QUERYResult = Array<{
+  _id: string;
+  name: string | null;
+  designation: string | null;
+  description: string | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  informalImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+}>;
+
+// Source: ../frontend/src/app/clubs/page.tsx
+// Variable: CLUBS_QUERY
+// Query: *[  _type == "club"]{    _id,    name,    logo}
+export type CLUBS_QUERYResult = Array<{
+  _id: string;
+  name: string | null;
+  logo: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+}>;
+
+// Source: ../frontend/src/app/events/page.tsx
+// Variable: EVENTS_QUERY
+// Query: *[_type == "event"]{    _id,    name,    typeOfEvent,    description,    image,    poster,    startDate,    endDate,    clubname[]->{name},    venue,    entryFee,    noOfParticipantsPerTeam  }
+export type EVENTS_QUERYResult = Array<{
+  _id: string;
+  name: string | null;
+  typeOfEvent: Array<string> | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  image: null;
+  poster: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  startDate: string | null;
+  endDate: string | null;
+  clubname: null;
+  venue: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "venue";
+  }> | null;
+  entryFee: number | null;
+  noOfParticipantsPerTeam: string | null;
+}>;
+
+// Source: ../frontend/src/app/newsletter/page.tsx
+// Variable: FETCH_NEWSLETTERS
+// Query: *[    _type=="newsletter"      ]{      _id,      link,      date    }
+export type FETCH_NEWSLETTERSResult = Array<{
+  _id: string;
+  link: string | null;
+  date: string | null;
+}>;
+
+// Source: ../frontend/src/components/examples/sanity-example.tsx
+// Variable: EXAMPLE_QUERY
+// Query: *[  _type == "officeBearer"]{  _id,  name,  designation,  description,  image}
+export type EXAMPLE_QUERYResult = Array<{
+  _id: string;
+  name: string | null;
+  designation: string | null;
+  description: string | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+}>;
+
+// Source: ../frontend/src/components/homepage/announcement.tsx
+// Variable: ANNOUNCEMENTS_QUERY
+// Query: *[_type == "announcement"]{    _id,    title,    description,    date,    expiry,    category  }
+export type ANNOUNCEMENTS_QUERYResult = Array<{
+  _id: string;
+  title: string | null;
+  description: string | null;
+  date: string | null;
+  expiry: string | null;
+  category: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+}>;
+
+// Source: ../frontend/src/components/homepage/office-bearers-&-announcements.tsx
+// Variable: ALL_OFFICE_BEARERS_QUERY
+// Query: *[  _type == "officeBearer"]{  _id,  name,  designation,  description,  image}
+export type ALL_OFFICE_BEARERS_QUERYResult = Array<{
+  _id: string;
+  name: string | null;
+  designation: string | null;
+  description: string | null;
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+}>;
+
+// Query TypeMap
+import "@sanity/client";
+declare module "@sanity/client" {
+  interface SanityQueries {
+    "*[\n  _type == \"officeBearer\" && designation != \"Director\"\n  ]{\n    _id,\n    name,\n    designation,\n    description,\n    image, \n    informalImage\n  }": OFFICE_BEARERS_QUERYResult;
+    "*[\n  _type == \"club\"]{\n    _id,\n    name,\n    logo}": CLUBS_QUERYResult;
+    "\n  *[_type == \"event\"]{\n    _id,\n    name,\n    typeOfEvent,\n    description,\n    image,\n    poster,\n    startDate,\n    endDate,\n    clubname[]->{name},\n    venue,\n    entryFee,\n    noOfParticipantsPerTeam\n  }\n": EVENTS_QUERYResult;
+    "*[\n    _type==\"newsletter\"  \n    ]{\n      _id,\n      link,\n      date\n    }": FETCH_NEWSLETTERSResult;
+    "*[\n  _type == \"officeBearer\"\n]{\n  _id,\n  name,\n  designation,\n  description,\n  image\n}": EXAMPLE_QUERYResult | ALL_OFFICE_BEARERS_QUERYResult;
+    "*[_type == \"announcement\"]{\n    _id,\n    title,\n    description,\n    date,\n    expiry,\n    category\n  }": ANNOUNCEMENTS_QUERYResult;
+  }
+}
