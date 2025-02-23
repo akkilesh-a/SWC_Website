@@ -54,7 +54,7 @@ const Announcements = () => {
 
   return (
     <div>
-      <div className="text-center py-24 space-y-8">
+      <div className="md:px-16 lg:px-28 xl:px-40 py-16 text-center space-y-8">
         <Heading>Announcements</Heading>
         {loading ? (
           <div className="flex justify-center items-center h-screen">
