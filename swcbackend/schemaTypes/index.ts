@@ -4,6 +4,7 @@ import { eventType } from "./eventType";
 import { newsletterType } from "./newsletterType";
 import { officeBearerType } from "./officeBearerType";
 import { blogType } from "./blogType";
+import { venueType } from "./venue";
 
 export const schemaTypes = [
     officeBearerType,
@@ -11,5 +12,6 @@ export const schemaTypes = [
     clubType,
     eventType,
     newsletterType,
-    blogType
+    blogType,
+    venueType
 ]
