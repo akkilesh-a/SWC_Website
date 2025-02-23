@@ -13,13 +13,99 @@ export const eventType = defineType({
             .error('Event name required!')
     }),
     defineField({
+        name:'isCollab',
+        title:'Is it a Collaboration',
+        type:'boolean',
+        initialValue:false
+    }),
+    defineField({
+        name: 'clubname',
+        type: 'reference',
+        to:[{type:'club'}],
+        hidden:({document})=>document?.isCollab?true:false,
+    }),
+    defineField({
+        name: 'clubnames',
+        type: 'array',
+        of:[
+            {
+                type:'reference',
+                to:[{type:'club'}]
+            }
+        ],
+        hidden:({document})=>!document?.isCollab,
+    }),
+    defineField({
         name: 'typeOfEvent',
-        type: 'string',
+        type: 'array',
+        of:[
+            {
+                type:'string',
+            }
+        ],
+        options:{
+            list:[
+                {
+                    title:"Technical",
+                    value:"Technical"
+                },
+                {
+                    title:"Cultural",
+                    value:"Cultural"
+                },
+                {
+                    title:"Sports",
+                    value:"Sports"
+                },
+                {
+                    title:"Workshop",
+                    value:"Workshop"
+                },
+                {
+                    title:"Seminar",
+                    value:"Seminar"
+                },
+                {
+                    title:"Conference",
+                    value:"Conference"
+                },
+                {
+                    title:"Hackathon",
+                    value:"Hackathon"
+                },
+                {
+                    title:"Webinar",
+                    value:"Webinar"
+                },
+                {
+                    title:"Fest",
+                    value:"Fest"
+                },
+                {
+                    title:"Launch",
+                    value:"launch"
+                },
+                {
+                    title:"Competition",
+                    value:"Competition"
+                },
+                {
+                    title:"Other",
+                    value:"Other"
+                }
+            ],
+            layout:'grid'
+        },
         validation:(rule)=>rule
             .required()
             .error('Event type required!')
-            .max(20)
-            .error('Event type should be less than 20 characters')
+    }),
+    defineField({
+        name : 'customEventType',
+        type: 'string',
+        title: 'Custom Event Type',
+        //@ts-expect-error - includes is not defined in the type
+        hidden:({document})=>!document?.typeOfEvent?.includes('Other'),
     }),
     defineField({
         name: 'startDate',
@@ -47,25 +133,34 @@ export const eventType = defineType({
             .error('End Date must be after Start Date')
     }),
     defineField({
-        name: 'clubname',
+        name: 'description',
+        type: 'array',
+        of:[{
+            type:'block'
+        }]
+    }),
+    defineField({
+        name: 'customVenueOption',
+        title: 'Custom Venue Option',
+        type: 'boolean',
+        initialValue:false
+    }),
+    defineField({
+        name: 'venue',
         type: 'array',
         of:[
             {
                 type:'reference',
-                to:[{type:'club'}]
+                to:[{type:'venue'}]
             }
-        ]
+        ],
+        hidden:({document})=>document?.customVenueOption?true:false,
     }),
     defineField({
-        name: 'description',
+        name : 'customVenue',
         type: 'string',
-    }),
-    defineField({
-        name: 'venue',
-        type: 'string',
-        validation:(rule)=>rule
-            .required()
-            .error('Event Venue required!')
+        title: 'Custom Venue',
+        hidden:({document})=>!document?.customVenueOption,
     }),
     defineField({
         name: 'poster',

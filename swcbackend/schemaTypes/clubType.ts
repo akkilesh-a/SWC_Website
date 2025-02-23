@@ -9,9 +9,16 @@ export const clubType = defineType({
         name: 'name',
         type: 'string',
         validation:(rule)=>rule
-            .required()
-            .error('Club name required!')
+          .required()
+          .error('Club name required!')
     }),
+    defineField({
+      name: 'abbreviation',
+      type: 'string',
+      validation:(rule)=>rule
+        .max(15)
+        .error('Abbreviation should be less than 10 characters')
+  }),
     defineField({
         name: 'description',
         type: 'text',

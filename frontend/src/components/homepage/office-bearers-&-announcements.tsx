@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { client } from "@/sanity/client";
 import { defineQuery } from "next-sanity";
@@ -21,10 +21,9 @@ const ALL_OFFICE_BEARERS_QUERY = defineQuery(`*[
 }`);
 
 const OfficeBearersAndAnnouncements = () => {
-
   const [officeBearers, setOfficeBearers] = useState<OfficeBearer[]>([]);
   const [loading, setLoading] = useState(true);
-  useEffect(()=>{
+  useEffect(() => {
     const fetchOfficeBearers = async () => {
       try {
         const data = await client.fetch(ALL_OFFICE_BEARERS_QUERY);
@@ -33,9 +32,9 @@ const OfficeBearersAndAnnouncements = () => {
       } catch (err) {
         console.error(err);
       }
-    }
+    };
     fetchOfficeBearers();
-  })
+  });
 
   return (
     <div>
@@ -43,18 +42,22 @@ const OfficeBearersAndAnnouncements = () => {
         <div className="flex justify-center items-center h-screen ">
           Loading..
         </div>
-        ) : (
+      ) : (
         <div>
-          <DirectorNote director={officeBearers.find(bearer => bearer.designation === "Director")!} />
+          <DirectorNote
+            director={
+              officeBearers.find((bearer) => bearer.designation === "Director")!
+            }
+          />
           <Announcements />
           <OfficeBearers officeBearers={officeBearers} />
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default OfficeBearersAndAnnouncements
+export default OfficeBearersAndAnnouncements;
 
 // export default async function OfficeBearersAndAnnouncements() {
 //   try {
