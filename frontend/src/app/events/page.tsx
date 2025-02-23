@@ -14,24 +14,64 @@ import {
   DialogTitle,
   Input,
 } from "@/components/ui";
-import { Club, Event } from "@/sanity/types";
+import { Club, Event, Venue } from "@/sanity/types";
 
 const EVENTS_QUERY = defineQuery(`
   *[_type == "event"]{
     _id,
     name,
+    isCollab,
+    clubnames[]->{name, abbreviation},
+    clubname->{name, abbreviation},
     typeOfEvent,
+    customEventType,
     description,
-    image,
     poster,
     startDate,
     endDate,
-    clubname[]->{name},
-    venue,
+    customVenueOption,
+    venue[]->{venueName, locationLink},
+    customVenue,
     entryFee,
     noOfParticipantsPerTeam
   }
 `);
+
+const CustomCalendarIcon = ({
+  className = "w-6 h-6",
+}: {
+  className?: string;
+}) => {
+  return (
+    <svg
+      width="14"
+      height="15"
+      className={className}
+      viewBox="0 0 14 15"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M11.8694 12.7757H1.48367V4.96832H11.8694M9.64387 0V1.41952H3.70918V0H2.22551V1.41952H1.48367C0.660234 1.41952 0 2.05121 0 2.83904V12.7757C0 13.1522 0.156315 13.5132 0.434557 13.7794C0.7128 14.0457 1.09018 14.1952 1.48367 14.1952H11.8694C12.2629 14.1952 12.6402 14.0457 12.9185 13.7794C13.1967 13.5132 13.353 13.1522 13.353 12.7757V2.83904C13.353 2.46256 13.1967 2.1015 12.9185 1.83529C12.6402 1.56908 12.2629 1.41952 11.8694 1.41952H11.1275V0M10.3857 7.80737H6.67652V11.3562H10.3857V7.80737Z"
+        fill="white"
+      />
+    </svg>
+  );
+};
+
+function getOrdinalSuffix(day: number) {
+  if (day > 3 && day < 21) return "th";
+  switch (day % 10) {
+    case 1:
+      return "st";
+    case 2:
+      return "nd";
+    case 3:
+      return "rd";
+    default:
+      return "th";
+  }
+}
 
 const EventsPage = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -50,9 +90,22 @@ const EventsPage = () => {
 
   useEffect(() => {
     const filteredData = events.filter((event) => {
+      const venue = event.venue as unknown as Venue[];
+      const venueNames = venue?.map((venue) => venue.venueName);
+      const club = event.clubname as unknown as Club;
+      const clubs = event.clubnames as unknown as Club[];
+      let clubNames: string[] = [];
+      clubNames.push(club?.name!);
+      clubs?.map((club) => clubNames.push(club.name!));
+
       return (
         event.name?.toLowerCase().includes(search.toLowerCase()) ||
-        event.venue?.toLowerCase().includes(search.toLowerCase())
+        venueNames?.some((venue) =>
+          venue?.toLowerCase().includes(search.toLowerCase()),
+        ) ||
+        clubNames?.some((club) =>
+          club?.toLowerCase().includes(search.toLowerCase()),
+        )
       );
     });
     setFilteredEvents(filteredData);
@@ -96,49 +149,59 @@ const EventsPage = () => {
 function EventPosterWithDetailsCard({ data }: { data: Event }) {
   const imgURL = data.poster
     ? urlFor(data.poster)?.url()
-    : "https://placehold.co/550x310/png";
+    : "https://placehold.co/300x400/png";
 
-  const clubs = data.clubname as unknown as Club[];
+  const clubs = data.clubnames as unknown as Club[];
+  const club = data.clubname as unknown as Club;
+  const venue = data.venue as unknown as Venue[];
 
   return (
     <Dialog>
       <DialogTrigger>
         <div className="text-white flex flex-col ">
-          <Image
-            src={imgURL!}
-            alt="poster"
-            className=""
-            width={400}
-            height={100}
-          />
-          <div className="bg-darkblue w-full h-[10rem] p-2 flex flex-col justify-between">
+          <Image src={imgURL!} alt="poster" width={400} height={100} />
+          <div className="bg-darkblue w-full p-2 flex flex-col gap-2">
+            {/* Event Tags */}
+            {/* <div className="flex flex-row flex-wrap text-sm gap-2">
+              {data.typeOfEvent?.map((type,index)=>{
+                return(
+                  <div className="bg-white text-darkblue px-1 py-[0.5px] " key={index}>
+                    {type}
+                  </div>
+                )
+              })}
+            </div> */}
             {/* Event Name and Clubs */}
             <div className="flex text-left justify-between">
-              <div>
-                <div className="w-[11rem] text-lg sm:text-sm text-white truncate font-bold ">
+              <div className="space-y-1">
+                {/* Event Name */}
+                <div className="w-[12rem] text-sm text-white truncate font-bold ">
                   {data.name}
                 </div>
-                {clubs?.map((club, index) => {
-                  return (
-                    <div className="text-xs" key={index}>
-                      {club.name} {index < clubs.length - 1 && ","}
-                    </div>
-                  );
-                })}
+                {/* Clubs */}
+                {data.isCollab ? (
+                  clubs?.map((club, index) => {
+                    return (
+                      <div className="text-xs" key={index}>
+                        {club.name} {index < clubs.length - 1 && ","}
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="text-xs">{club.name}</div>
+                )}
               </div>
-              <div className="text-xl font-bold">
+              <div className="text-sm font-bold">
                 {data.entryFee != 0 ? "₹" + data.entryFee : "Free"}
               </div>
             </div>
-            <div className="flex justify-between text-sm">
-              {data.typeOfEvent}
-            </div>
-
             {/* Date and Time */}
             <div className="flex justify-between text-sm sm:text-[0.65rem]">
               <div className="flex items-center gap-2">
-                <Calendar className="sm:w-10 sm:h-10 w-8 h-8" />
-                <div className="">
+                {/* <Calendar className="sm:w-10 sm:h-10 w-8 h-8" /> */}
+                <CustomCalendarIcon />
+                <div className="text-left">
+                  {/* Timings for one day events */}
                   {data.startDate?.slice(0, 10) ===
                     data.endDate?.slice(0, 10) && (
                     <div>
@@ -147,15 +210,35 @@ function EventPosterWithDetailsCard({ data }: { data: Event }) {
                         data.endDate?.slice(11, 16)}
                     </div>
                   )}
-                  <div>
-                    {data.startDate
-                      ? new Date(data.startDate).toLocaleDateString("en-GB", {
-                          day: "2-digit",
-                          month: "2-digit",
-                          year: "2-digit",
-                        })
-                      : ""}
+
+                  {/* Date for one day events */}
+                  <div className="sm:text-[0.85rem]">
+                    {data.startDate?.slice(0, 10) ===
+                      data.endDate?.slice(0, 10) &&
+                      data.startDate &&
+                      new Date(data.startDate).getDate() +
+                        getOrdinalSuffix(new Date(data.startDate).getDate()) +
+                        " " +
+                        new Date(data.startDate).toLocaleDateString("en-GB", {
+                          month: "long",
+                        })}
                   </div>
+
+                  {/* Start Date for multi day events */}
+                  {data.startDate?.slice(0, 10) !==
+                    data.endDate?.slice(0, 10) && (
+                    <div>
+                      {data.startDate
+                        ? new Date(data.startDate).toLocaleDateString("en-GB", {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "2-digit",
+                          })
+                        : ""}
+                    </div>
+                  )}
+
+                  {/* End Date for multi day events */}
                   {data.startDate?.slice(0, 10) !==
                     data.endDate?.slice(0, 10) && (
                     <div>
@@ -172,11 +255,15 @@ function EventPosterWithDetailsCard({ data }: { data: Event }) {
               </div>
               <div className="space-y-2">
                 <div className="flex items-center justify-end gap-2 text-xs">
-                  <User /> {data.noOfParticipantsPerTeam}
+                  <User className="w-5 h-5" fill="white" />{" "}
+                  {data.noOfParticipantsPerTeam}
                 </div>
-                <div className="flex items-center justify-end gap-2">
-                  <MapPin /> {data.venue?.slice(0, 1).toUpperCase()}
-                  {data.venue?.slice(1, 20)}
+                <div className="flex justify-end gap-2 items-end">
+                  <MapPin className="w-5 h-5" fill="white" />
+                  <div>
+                    {venue && venue[0].venueName}
+                    {data.customVenueOption && data.customVenue}
+                  </div>
                 </div>
               </div>
             </div>
@@ -204,7 +291,7 @@ function EventPosterWithDetailsCard({ data }: { data: Event }) {
           <div className="space-y-2">
             <div className="text-xl sm:text-4xl font-semibold">{data.name}</div>
             <div className="text-sm sm:text-base text-left">
-              {data.description}
+              {/* {data.description} */}
             </div>
           </div>
           <div className="flex justify-between">
@@ -235,8 +322,8 @@ function EventPosterWithDetailsCard({ data }: { data: Event }) {
               <MapPin className="sm:w-10 sm:h-10 w-8 h-8" />
               <div className="flex flex-col">
                 <div>
-                  {data.venue?.slice(0, 1).toUpperCase()}
-                  {data.venue?.slice(1, 20)}
+                  {/* {data.venue?.slice(0, 1).toUpperCase()} */}
+                  {/* {data.venue?.slice(1, 20)} */}
                 </div>
               </div>
             </div>
