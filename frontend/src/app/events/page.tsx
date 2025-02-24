@@ -2,7 +2,7 @@
 
 import { LandingImageWithContent } from "@/components";
 import { client } from "@/sanity/client";
-import { Calendar, MapPin, Search, User } from "lucide-react";
+import { Calendar, ListFilter, MapPin, Search, User } from "lucide-react";
 import { defineQuery } from "next-sanity";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -13,6 +13,11 @@ import {
   DialogTrigger,
   DialogTitle,
   Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui";
 import { Club, Event, Venue } from "@/sanity/types";
 
@@ -34,6 +39,15 @@ const EVENTS_QUERY = defineQuery(`
     customVenue,
     entryFee,
     noOfParticipantsPerTeam
+  }
+`);
+
+const CLUBS_QUERY = defineQuery(`
+  *[_type == "club"]{
+    _id,
+    name,
+    abbreviation,
+    clubType
   }
 `);
 
@@ -75,15 +89,24 @@ function getOrdinalSuffix(day: number) {
 
 const EventsPage = () => {
   const [events, setEvents] = useState<Event[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [eventPostersLoading, setEventPostersLoading] = useState(true);
   const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
   const [search, setSearch] = useState("");
+
+  // For Select Dropdown
+  const [clubs, setClubs] = useState<string[]>([]);
+  const [dropdownDataLoading, setDropdownDataLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       const data = await client.fetch(EVENTS_QUERY);
       setEvents(data);
-      setLoading(false);
+      setEventPostersLoading(false);
+
+      // For Select Dropdown
+      const clubData = await client.fetch(CLUBS_QUERY);
+      setClubs(clubData.map((club: Club) => club.name));
+      setDropdownDataLoading(false);
     }
     fetchData();
   }, []);
@@ -95,8 +118,14 @@ const EventsPage = () => {
       const club = event.clubname as unknown as Club;
       const clubs = event.clubnames as unknown as Club[];
       const clubNames: string[] = [];
-      clubNames.push(club.name!);
-      clubs?.map((club) => clubNames.push(club.name!));
+      if (club) {
+        clubNames.push(club.name!);
+        clubNames.push(club.abbreviation!);
+      }
+      if (clubs) {
+        clubs?.map((club) => clubNames.push(club.name!));
+        clubs?.map((club) => clubNames.push(club.abbreviation!));
+      }
 
       return (
         event.name?.toLowerCase().includes(search.toLowerCase()) ||
@@ -121,17 +150,51 @@ const EventsPage = () => {
         subheading="Student Welfare Committee"
       />
       <div className="md:p-[10%] lg:p-[5%] flex flex-col space-y-16 items-center sm:p-[5%]">
-        <div className="flex w-[50%] relative justify-center items-center text-[#9C9C9C] ">
-          <Input
-            type="text"
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search"
-            className="bg-[#EBEBEB] px-8 rounded-md"
-          />
-          <Search className="absolute left-2" />
+        <div className="flex space-x-8 text-[#9C9C9C]">
+          <div className="flex w-[50%] relative justify-center items-center  ">
+            <Input
+              type="text"
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search"
+              className="bg-[#EBEBEB] px-8 rounded-md"
+            />
+            <Search className="absolute left-2" />
+          </div>
+          <div className="flex w-[50%] relative justify-center items-center text-[#9C9C9C] ">
+            <Select
+              onValueChange={(value) => {
+                if (value === "all") {
+                  setSearch("");
+                } else {
+                  setSearch(value);
+                }
+              }}
+            >
+              <SelectTrigger className="bg-[#EBEBEB] w-[280px] ">
+                <div className="flex space-x-2 items-center">
+                  <ListFilter />
+                  <SelectValue placeholder="Select Clubs" />
+                </div>
+              </SelectTrigger>
+              <SelectContent className="bg-[#EBEBEB]">
+                <SelectItem value="all">All Clubs</SelectItem>
+                {dropdownDataLoading ? (
+                  <div>Loading...</div>
+                ) : (
+                  clubs.map((club, index) => {
+                    return (
+                      <SelectItem value={club} key={index}>
+                        {club}
+                      </SelectItem>
+                    );
+                  })
+                )}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
         <div className="grid min-h-[100vh] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16">
-          {loading ? (
+          {eventPostersLoading ? (
             <div>Loading...</div>
           ) : (
             data.map((event) => {
@@ -179,17 +242,19 @@ function EventPosterWithDetailsCard({ data }: { data: Event }) {
                   {data.name}
                 </div>
                 {/* Clubs */}
-                {data.isCollab ? (
-                  clubs?.map((club, index) => {
-                    return (
-                      <div className="text-xs" key={index}>
-                        {club.name} {index < clubs.length - 1 && ","}
-                      </div>
-                    );
-                  })
-                ) : (
-                  <div className="text-xs">{club.name}</div>
-                )}
+                <div className="flex gap-1 flex-wrap">
+                  {data.isCollab ? (
+                    clubs?.map((club, index) => {
+                      return (
+                        <div className="text-xs" key={index}>
+                          {club.name} {index < clubs.length - 1 && ","}
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className="text-xs">{club.name}</div>
+                  )}
+                </div>
               </div>
               <div className="text-sm font-bold">
                 {data.entryFee != 0 ? "₹" + data.entryFee : "Free"}
@@ -322,8 +387,8 @@ function EventPosterWithDetailsCard({ data }: { data: Event }) {
               <MapPin className="sm:w-10 sm:h-10 w-8 h-8" />
               <div className="flex flex-col">
                 <div>
-                  {/* {data.venue?.slice(0, 1).toUpperCase()} */}
-                  {/* {data.venue?.slice(1, 20)} */}
+                  {venue && venue[0].venueName}
+                  {data.customVenueOption && data.customVenue}
                 </div>
               </div>
             </div>
