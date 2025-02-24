@@ -41,7 +41,7 @@ async function NewsLettersPage() {
         <iframe
           className="bg-white border border-white w-[400px] sm:w-[600px] md:w-[1000px] h-[500px]"
           key={data[0]._id}
-          src={data[0].link}
+          src={data[0].link!}
         />
       </div>
     </div>

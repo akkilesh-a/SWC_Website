@@ -12,7 +12,7 @@ import {
   Heading,
   Text,
 } from "../ui";
-import { Announcement } from "@/sanity/types";
+import { Announcement, ANNOUNCEMENTS_QUERYResult } from "@/sanity/types";
 import Autoplay from "embla-carousel-autoplay";
 import { type UseEmblaCarouselType } from "embla-carousel-react";
 
@@ -29,7 +29,7 @@ const ANNOUNCEMENTS_QUERY = defineQuery(
 );
 
 const Announcements = () => {
-  const [announcementsData, setAnnouncementsData] = useState<Announcement[]>(
+  const [announcementsData, setAnnouncementsData] = useState<ANNOUNCEMENTS_QUERYResult>(
     [],
   );
   const [loading, setLoading] = useState(true);
@@ -82,7 +82,7 @@ const Announcements = () => {
                     className="md:basis-1/2 lg:basis-1/2 xl:basis-1/3"
                     key={announcement._id}
                   >
-                    <AnnouncementCard announcement={announcement} />
+                    <AnnouncementCard announcement={announcement as Announcement} />
                   </CarouselItem>
                 ))}
               </CarouselContent>

@@ -94,8 +94,8 @@ const EventsPage = () => {
       const venueNames = venue?.map((venue) => venue.venueName);
       const club = event.clubname as unknown as Club;
       const clubs = event.clubnames as unknown as Club[];
-      let clubNames: string[] = [];
-      clubNames.push(club?.name!);
+      const clubNames: string[] = [];
+      clubNames.push(club.name!);
       clubs?.map((club) => clubNames.push(club.name!));
 
       return (

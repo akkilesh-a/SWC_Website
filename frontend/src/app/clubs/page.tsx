@@ -3,34 +3,34 @@ import { LandingImageWithContent } from "@/components";
 import React from "react";
 import Image from "next/image";
 import { Heading, Text } from "@/components/ui";
-import { defineQuery } from "next-sanity";
-import { client } from "@/sanity/client";
-import { urlFor } from "@/constants/sanity";
-import { Club } from "@/sanity/types";
+// import { defineQuery } from "next-sanity";
+// import { client } from "@/sanity/client";
+// import { urlFor } from "@/constants/sanity";
+// import { Club } from "@/sanity/types";
 
-const CLUBS_QUERY = defineQuery(`*[
-  _type == "club"]{
-    _id,
-    name,
-    logo}`);
+// const CLUBS_QUERY = defineQuery(`*[
+//   _type == "club"]{
+//     _id,
+//     name,
+//     logo}`);
 
-const ClubCard = ({ name, logo }: { name: string; logo: string }) => {
-  return (
-    <div className="flex flex-col text-center p-16">
-      <Image
-        src={logo}
-        className="w-[100%] h-[100%] object-contain"
-        width={120}
-        height={120}
-        alt="Clubs"
-      />
-      <Text className="mt-2">{name}</Text>
-    </div>
-  );
-};
+// const ClubCard = ({ name, logo }: { name: string; logo: string }) => {
+//   return (
+//     <div className="flex flex-col text-center p-16">
+//       <Image
+//         src={logo}
+//         className="w-[100%] h-[100%] object-contain"
+//         width={120}
+//         height={120}
+//         alt="Clubs"
+//       />
+//       <Text className="mt-2">{name}</Text>
+//     </div>
+//   );
+// };
 
 const ClubsPage = async () => {
-  const clubData = await client.fetch(CLUBS_QUERY);
+  // const clubData = await client.fetch(CLUBS_QUERY);
   return (
     <div>
       <LandingImageWithContent
@@ -63,12 +63,12 @@ const ClubsPage = async () => {
         <Heading className="text-center">Explore</Heading>
         <div>Filter</div>
         <div className="grid grid-cols-1 p-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:p-24">
-          {clubData.map((clubData:Club , index:number) => {
+          {/* {clubData.map((clubData:Club , index:number) => {
             const imgUrl = clubData.logo ? urlFor(clubData.logo)?.url(): "/about/placeholder.png";
             return (
               <ClubCard name={clubData.name!} logo={imgUrl!} key={index} />
             );
-          })}
+          })} */}
           
         </div>
       </div>

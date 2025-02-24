@@ -4,7 +4,7 @@ import { client } from "@/sanity/client";
 import { defineQuery } from "next-sanity";
 import OfficeBearers from "./office-bearers";
 import DirectorNote from "./director-note";
-import { OfficeBearer } from "@/sanity/types";
+import { ALL_OFFICE_BEARERS_QUERYResult, OfficeBearer } from "@/sanity/types";
 import Announcements from "./announcement";
 // import BlueButton from "../blue-button";
 // import Link from "next/link";
@@ -21,7 +21,7 @@ const ALL_OFFICE_BEARERS_QUERY = defineQuery(`*[
 }`);
 
 const OfficeBearersAndAnnouncements = () => {
-  const [officeBearers, setOfficeBearers] = useState<OfficeBearer[]>([]);
+  const [officeBearers, setOfficeBearers] = useState<ALL_OFFICE_BEARERS_QUERYResult>([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchOfficeBearers = async () => {
@@ -46,11 +46,11 @@ const OfficeBearersAndAnnouncements = () => {
         <div>
           <DirectorNote
             director={
-              officeBearers.find((bearer) => bearer.designation === "Director")!
+              officeBearers.find((bearer) => bearer.designation === "Director") as OfficeBearer
             }
           />
           <Announcements />
-          <OfficeBearers officeBearers={officeBearers} />
+          <OfficeBearers officeBearers={officeBearers as OfficeBearer[]} />
         </div>
       )}
     </div>
@@ -58,28 +58,3 @@ const OfficeBearersAndAnnouncements = () => {
 };
 
 export default OfficeBearersAndAnnouncements;
-
-// export default async function OfficeBearersAndAnnouncements() {
-//   try {
-//     const data = await client.fetch(ALL_OFFICE_BEARERS_QUERY);
-//     const director = data.find(
-//       (bearer: OfficeBearer) => bearer.designation === "Director",
-//     );
-//     const officeBearers = data;
-//     return (
-//       <div>
-//         <DirectorNote director={director} />
-//         <Announcements />
-//         <OfficeBearers officeBearers={officeBearers} />
-//       </div>
-//     );
-//   } catch (err) {
-//     console.error(err);
-//     return (
-//       <div className="flex justify-center items-center h-screen text-red-500">
-//         Failed to fetch data. Please try again later or Refresh the page.
-//         <Link href="/"><BlueButton>Refresh</BlueButton></Link>
-//       </div>
-//     );
-//   }
-// }
