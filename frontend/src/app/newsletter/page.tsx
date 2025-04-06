@@ -4,6 +4,8 @@ import { client } from "@/sanity/client";
 import { defineQuery } from "next-sanity";
 import { ArrowDownToLine } from "lucide-react";
 import { format } from "date-fns";
+import { urlFor } from "@/constants/sanity";
+import Image from "next/image";
 
 const FETCH_NEWSLETTERS = defineQuery(`*[
     _type=="newsletter"
@@ -22,14 +24,17 @@ async function NewsLettersPage() {
 
   // Sort by date descending
   const sortedNewsletters = [...data].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    (a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime()
   );
 
   const latestNewsletter = sortedNewsletters[0];
 
-  const newsletters2024 = sortedNewsletters.filter(
-    (item) => new Date(item.date).getFullYear() === 2024 && item.link
-  );
+  const newslettersByYear = sortedNewsletters.reduce((acc, newsletter) => {
+    const year = new Date(newsletter.date!).getFullYear();
+    if (!acc[year]) acc[year] = [];
+    acc[year].push(newsletter);
+    return acc;
+  }, {} as Record<number, typeof sortedNewsletters>);
 
   return (
     <div>
@@ -40,12 +45,12 @@ async function NewsLettersPage() {
         backgroundImage="/vit-chennai-entrance.png"
       />
 
-      <div id="scroll-to-component" className="bg-white flex flex-col items-center justify-center space-y-8 p-16">
+      <div id="scroll-to-component" className="bg-white flex flex-col items-center justify-center p-16">
         {/* Featured Latest Newsletter Section */}
         <div className="flex flex-col lg:flex-row items-center justify-center">
           <div className="text-center lg:text-left md:pr-8">
             <Heading>Latest Newsletter</Heading>
-            <SubHeading>{format(new Date(latestNewsletter.date), "MMMM yyyy")}</SubHeading>
+            <SubHeading>{format(new Date(latestNewsletter.date!), "MMMM yyyy")}</SubHeading>
             <p className="lg:text-left text-center mb-8 max-w-lg">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sem ex, elementum eu velit ac, porta semper justo.
             </p>
@@ -56,43 +61,69 @@ async function NewsLettersPage() {
             src={
               latestNewsletter.link?.startsWith("https://online")
                 ? latestNewsletter.link
-                : `https://online.${latestNewsletter.link.slice(8)}`
+                : `https://online.${latestNewsletter.link?.slice(8)}`
             } 
           />         
         </div>
 
         {/* 2024 Edition Section */}
-        <div className="w-full mt-12 p-[100px]">
-          <div className="w-full inline-block border-b-[2px] border-black leading-none pb-0.5 mb-[100px] font-newsreader font-bold text-[29.97px] md:text-[30px] lg:text-[50px] xl:text-[60px]">
-            2024 Editions
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {newsletters2024.map((newsletter, index) => {
-              const fixedLink = newsletter.link.startsWith("https://online.pubhtml5.com")
-                ? newsletter.link
-                : `https://online.pubhtml5.com${newsletter.link}`;
-              const formattedMonth = format(new Date(newsletter.date), "MMMM yyyy");
+        <div className="w-full p-[100px]">
+        {Object.entries(newslettersByYear)
+          .sort((a, b) => Number(b[0]) - Number(a[0])) // Sort years descending
+          .map(([year, newsletters]) => (
+            <div key={year} className="w-full  p-[100px]">
+              <div className="w-full inline-block border-b-[2px] border-black leading-none pb-0.5 mb-[100px] font-newsreader font-bold text-[29.97px] md:text-[30px] lg:text-[50px] xl:text-[60px]">
+                {year} Editions
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                {(newsletters).map((newsletter, index) => {
+                  const formattedMonth = format(new Date(newsletter.date!), "MMMM yyyy");
+                  const imgURL = newsletter.coverPhoto
+                                  ? urlFor(newsletter.coverPhoto)?.url()
+                                  : "https://placehold.co/300x400/png";
+                  if(newsletter.link){
+                    const fixedLink = newsletter.link.startsWith("https://online")
+                      ? newsletter.link
+                      : `https://online.${latestNewsletter.link?.slice(8)}`;
 
-              return (
-                <div key={newsletter._id || index} className="flex flex-col items-center">
-                  <div className="bg-gray-200 h-[300px] w-[250px] mb-0" />
-                  <a
-                    href={fixedLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-blue-900 text-white px-4 py-2 w-[250px] flex justify-between items-center mb-2"
-                  >
-                    <div className="flex items-center space-x-2">
-                      <CircleArrowRightIcon className="h-7 w-7" />
-                      <span>Read now</span>
-                    </div>
-                    <ArrowDownToLine className="h-6 w-6" />
-                  </a>
-                  <p>{formattedMonth}</p>
-                </div>
-              );
-            })}
-          </div>
+                    return (
+                      <div key={newsletter._id || index} className="flex flex-col items-center">
+                        <Image src={imgURL!} alt={newsletter.date!} width={250} height={300}/>
+                        <a
+                          href={fixedLink}
+                          target="_blank"
+                          className="bg-blue-900 text-white px-4 py-2 w-[250px] flex justify-between items-center mb-2"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <CircleArrowRightIcon className="h-7 w-7" />
+                            <span>Read now</span>
+                          </div>
+                        </a>
+                        <p>{formattedMonth}</p>
+                      </div>
+                    );
+                  }else{
+                    return(
+                      <div key={newsletter._id || index} className="flex flex-col items-center">
+                        <Image src={imgURL!} alt={newsletter.date!} width={250} height={300}/>
+                        <div
+                          className="bg-blue-900 text-white px-4 py-2 w-[250px] flex justify-between items-center mb-2"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <CircleArrowRightIcon className="h-7 w-7" />
+                            <span>Read now</span>
+                          </div>
+                          <ArrowDownToLine className="h-6 w-6" />
+                        </div>
+                        <p>{formattedMonth}</p>
+                      </div>
+                    )
+                  }
+                })}
+              </div>
+            </div>
+          ))}
+
         </div>
       </div>
     </div>

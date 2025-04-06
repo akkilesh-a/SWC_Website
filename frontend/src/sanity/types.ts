@@ -39,28 +39,6 @@ export type SanityImageDimensions = {
   aspectRatio?: number;
 };
 
-export type SanityFileAsset = {
-  _id: string;
-  _type: "sanity.fileAsset";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  originalFilename?: string;
-  label?: string;
-  title?: string;
-  description?: string;
-  altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
-  uploadId?: string;
-  path?: string;
-  url?: string;
-  source?: SanityAssetSourceData;
-};
-
 export type Geopoint = {
   _type: "geopoint";
   lat?: number;
@@ -144,6 +122,48 @@ export type Newsletter = {
   _rev: string;
   link?: string;
   date?: string;
+  pdfFile?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    _type: "file";
+  };
+  coverPhoto?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
+export type SanityFileAsset = {
+  _id: string;
+  _type: "sanity.fileAsset";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
+  uploadId?: string;
+  path?: string;
+  url?: string;
+  source?: SanityAssetSourceData;
 };
 
 export type Event = {
@@ -353,11 +373,11 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Slug | Venue | Blog | Newsletter | Event | Club | Announcement | OfficeBearer | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | Slug | Venue | Blog | Newsletter | SanityFileAsset | Event | Club | Announcement | OfficeBearer | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ../frontend/src/app/about/page.tsx
 // Variable: OFFICE_BEARERS_QUERY
-// Query: *[  _type == "officeBearer" && designation != "Director"  ]{    _id,    name,    designation,    description,    image,     informalImage  }
+// Query: *[  _type == "officeBearer" && designation != "Director"  ]{    _id,    name,    designation,    description,    image,     informalImage,    _type,     _createdAt,     _updatedAt,     _rev   }
 export type OFFICE_BEARERS_QUERYResult = Array<{
   _id: string;
   name: string | null;
@@ -385,11 +405,15 @@ export type OFFICE_BEARERS_QUERYResult = Array<{
     crop?: SanityImageCrop;
     _type: "image";
   } | null;
+  _type: "officeBearer";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
 }>;
 
 // Source: ../frontend/src/app/clubs/page.tsx
 // Variable: CLUBS_QUERY
-// Query: *[  _type == "club"]{    _id,    name,    logo}
+// Query: *[  _type == "club"]{    _id,    name,    logo,    description,    faculty1,    faculty1url,    faculty2,    faculty2url,    clubType}
 export type CLUBS_QUERYResult = Array<{
   _id: string;
   name: string | null;
@@ -404,15 +428,31 @@ export type CLUBS_QUERYResult = Array<{
     crop?: SanityImageCrop;
     _type: "image";
   } | null;
+  description: string | null;
+  faculty1: string | null;
+  faculty1url: string | null;
+  faculty2: string | null;
+  faculty2url: string | null;
+  clubType: "Chapter" | "Literary Club" | "Other" | "Recreational Club" | "Special Team" | "Technical Club" | null;
 }>;
 
 // Source: ../frontend/src/app/events/page.tsx
 // Variable: EVENTS_QUERY
-// Query: *[_type == "event"]{    _id,    name,    typeOfEvent,    description,    image,    poster,    startDate,    endDate,    clubname[]->{name},    venue,    entryFee,    noOfParticipantsPerTeam  }
+// Query: *[_type == "event"]{    _id,    name,    isCollab,    clubnames[]->{name, abbreviation},    clubname->{name, abbreviation},    typeOfEvent,    customEventType,    description,    poster,    startDate,    endDate,    customVenueOption,    venue[]->{venueName, locationLink},    customVenue,    entryFee,    noOfParticipantsPerTeam  }
 export type EVENTS_QUERYResult = Array<{
   _id: string;
   name: string | null;
+  isCollab: boolean | null;
+  clubnames: Array<{
+    name: string | null;
+    abbreviation: string | null;
+  }> | null;
+  clubname: {
+    name: string | null;
+    abbreviation: string | null;
+  } | null;
   typeOfEvent: Array<string> | null;
+  customEventType: string | null;
   description: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -431,7 +471,6 @@ export type EVENTS_QUERYResult = Array<{
     _type: "block";
     _key: string;
   }> | null;
-  image: null;
   poster: {
     asset?: {
       _ref: string;
@@ -445,36 +484,41 @@ export type EVENTS_QUERYResult = Array<{
   } | null;
   startDate: string | null;
   endDate: string | null;
-  clubname: null;
+  customVenueOption: boolean | null;
   venue: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "venue";
+    venueName: string | null;
+    locationLink: string | null;
   }> | null;
+  customVenue: string | null;
   entryFee: number | null;
   noOfParticipantsPerTeam: string | null;
+}>;
+// Variable: CLUBS_INFO_QUERY
+// Query: *[_type == "club"]{    _id,    name,    abbreviation,    clubType  }
+export type CLUBS_INFO_QUERYResult = Array<{
+  _id: string;
+  name: string | null;
+  abbreviation: string | null;
+  clubType: "Chapter" | "Literary Club" | "Other" | "Recreational Club" | "Special Team" | "Technical Club" | null;
 }>;
 
 // Source: ../frontend/src/app/newsletter/page.tsx
 // Variable: FETCH_NEWSLETTERS
-// Query: *[    _type=="newsletter"      ]{      _id,      link,      date    }
+// Query: *[    _type=="newsletter"  ]{    _id,    link,    date,    pdfFile,    coverPhoto  }
 export type FETCH_NEWSLETTERSResult = Array<{
   _id: string;
   link: string | null;
   date: string | null;
-}>;
-
-// Source: ../frontend/src/components/examples/sanity-example.tsx
-// Variable: EXAMPLE_QUERY
-// Query: *[  _type == "officeBearer"]{  _id,  name,  designation,  description,  image}
-export type EXAMPLE_QUERYResult = Array<{
-  _id: string;
-  name: string | null;
-  designation: string | null;
-  description: string | null;
-  image: {
+  pdfFile: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    _type: "file";
+  } | null;
+  coverPhoto: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -534,11 +578,12 @@ export type ALL_OFFICE_BEARERS_QUERYResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[\n  _type == \"officeBearer\" && designation != \"Director\"\n  ]{\n    _id,\n    name,\n    designation,\n    description,\n    image, \n    informalImage\n  }": OFFICE_BEARERS_QUERYResult;
-    "*[\n  _type == \"club\"]{\n    _id,\n    name,\n    logo}": CLUBS_QUERYResult;
-    "\n  *[_type == \"event\"]{\n    _id,\n    name,\n    typeOfEvent,\n    description,\n    image,\n    poster,\n    startDate,\n    endDate,\n    clubname[]->{name},\n    venue,\n    entryFee,\n    noOfParticipantsPerTeam\n  }\n": EVENTS_QUERYResult;
-    "*[\n    _type==\"newsletter\"  \n    ]{\n      _id,\n      link,\n      date\n    }": FETCH_NEWSLETTERSResult;
-    "*[\n  _type == \"officeBearer\"\n]{\n  _id,\n  name,\n  designation,\n  description,\n  image\n}": EXAMPLE_QUERYResult | ALL_OFFICE_BEARERS_QUERYResult;
+    "*[\n  _type == \"officeBearer\" && designation != \"Director\"\n  ]{\n    _id,\n    name,\n    designation,\n    description,\n    image, \n    informalImage,\n    _type, \n    _createdAt, \n    _updatedAt, \n    _rev \n  }": OFFICE_BEARERS_QUERYResult;
+    "*[\n  _type == \"club\"]{\n    _id,\n    name,\n    logo,\n    description,\n    faculty1,\n    faculty1url,\n    faculty2,\n    faculty2url,\n    clubType}": CLUBS_QUERYResult;
+    "\n  *[_type == \"event\"]{\n    _id,\n    name,\n    isCollab,\n    clubnames[]->{name, abbreviation},\n    clubname->{name, abbreviation},\n    typeOfEvent,\n    customEventType,\n    description,\n    poster,\n    startDate,\n    endDate,\n    customVenueOption,\n    venue[]->{venueName, locationLink},\n    customVenue,\n    entryFee,\n    noOfParticipantsPerTeam\n  }\n": EVENTS_QUERYResult;
+    "\n  *[_type == \"club\"]{\n    _id,\n    name,\n    abbreviation,\n    clubType\n  }\n": CLUBS_INFO_QUERYResult;
+    "*[\n    _type==\"newsletter\"\n  ]{\n    _id,\n    link,\n    date,\n    pdfFile,\n    coverPhoto\n  }": FETCH_NEWSLETTERSResult;
     "*[_type == \"announcement\"]{\n    _id,\n    title,\n    description,\n    date,\n    expiry,\n    category\n  }": ANNOUNCEMENTS_QUERYResult;
+    "*[\n  _type == \"officeBearer\"\n]{\n  _id,\n  name,\n  designation,\n  description,\n  image\n}": ALL_OFFICE_BEARERS_QUERYResult;
   }
 }
