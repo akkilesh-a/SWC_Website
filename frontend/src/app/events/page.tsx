@@ -24,6 +24,10 @@ import { Club, Event, Venue } from "@/sanity/types";
 const EVENTS_QUERY = defineQuery(`
   *[_type == "event"]{
     _id,
+    _type,
+    _createdAt,
+    _updatedAt,
+    _rev,
     name,
     isCollab,
     clubnames[]->{name, abbreviation},
@@ -50,6 +54,13 @@ const CLUBS_QUERY = defineQuery(`
     clubType
   }
 `);
+
+interface PartialClubsData  {
+  _id:string;
+  name:string | null;
+  abbreviation:string | null;
+  clubType:"Chapter" | "Literary Club" | "Other" | "Recreational Club" | "Special Team" | "Technical Club" | null
+}
 
 const CustomCalendarIcon = ({
   className = "w-6 h-6",
@@ -105,7 +116,7 @@ const EventsPage = () => {
 
       // For Select Dropdown
       const clubData = await client.fetch(CLUBS_QUERY);
-      setClubs(clubData.map((club: Club) => club.name));
+      setClubs(clubData.map((club : PartialClubsData) => club.name).filter((name): name is string => name !== null));
       setDropdownDataLoading(false);
     }
     fetchData();

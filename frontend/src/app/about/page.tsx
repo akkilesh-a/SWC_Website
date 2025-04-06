@@ -5,7 +5,6 @@ import React from "react";
 import { client } from "@/sanity/client";
 import { defineQuery } from "next-sanity";
 import { urlFor } from "@/constants/sanity";
-import { OfficeBearer } from "@/sanity/types";
 import { MarqueeVertical } from "./_components/marquee-vertical";
 
 const OFFICE_BEARERS_QUERY = defineQuery(`*[
@@ -151,7 +150,7 @@ const AboutPage = async () => {
 
       <div>
         <Heading className="flex justify-center p-2">Office Bearers</Heading>
-        {officeBearersData.map((officeBearer: OfficeBearer, index: number) => {
+        {officeBearersData.map((officeBearer, index: number) => {
           const imgUrl = officeBearer.informalImage
             ? urlFor(officeBearer.informalImage)?.url()
             : "/about/placeholder.png";

@@ -28,6 +28,10 @@ import Link from "next/link";
 const CLUBS_QUERY = defineQuery(`*[
   _type == "club"]{
     _id,
+    _type,
+    _createdAt,
+    _updatedAt,
+    _rev,
     name,
     logo,
     description,
