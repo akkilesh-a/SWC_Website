@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${dmSerifText.variable} ${newsreader.variable}`}>
+      <body className={`${dmSerifText.variable} ${newsreader.className}`}>
         <ThemeProvider attribute="class" defaultTheme="system">
           <NavBar />
           {children}
