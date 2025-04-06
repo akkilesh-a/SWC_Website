@@ -24,6 +24,7 @@ const Home = () => {
       <LandingImageWithContent
         variant="image"
         image="/swc-logos/swc-logo-white.png"
+        backgroundImage="/vit-chennai-campus.png"
       />
       <StudentWelfareCommitteeDescription />
       <OfficeBearersAndAnnouncements />

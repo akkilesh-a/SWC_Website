@@ -192,10 +192,11 @@ const ClubsPage = () => {
 
   return (
     <div>
-      <LandingImageWithContent
+       <LandingImageWithContent
         variant="text"
         heading="Clubs"
         subheading="Student Welfare Committee"
+        backgroundImage="/vit-chennai-entrance.png"
       />
       <div className="flex flex-col-reverse md:flex-row items-center w-[100%] h-[65%]">
         <div className="flex flex-col justify-center items-center text-center  md:w-[65%]">

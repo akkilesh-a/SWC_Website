@@ -11,6 +11,7 @@ interface LandingImageWithContentProps {
   subheading?: string;
   className?: string;
   variant: "image" | "text";
+  backgroundImage : string
 }
 
 export const LandingImageWithContent = ({
@@ -19,6 +20,7 @@ export const LandingImageWithContent = ({
   subheading,
   className,
   variant,
+  backgroundImage
 }: LandingImageWithContentProps) => {
   return (
     <div>
@@ -26,7 +28,7 @@ export const LandingImageWithContent = ({
         <div>
           <Image
             className="w-[100vw] h-dvh"
-            src="/vit-chennai-campus.png"
+            src={backgroundImage}
             width={900}
             height={100}
             alt="VIT-Chennai"

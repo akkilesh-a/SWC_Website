@@ -30,11 +30,12 @@ async function NewsLettersPage() {
   return (
     <div>
       <div>
-        <LandingImageWithContent
-          variant="text"
-          heading="News Letters"
-          subheading="Student Welfare Committee"
-        />
+      <LandingImageWithContent
+        variant="text"
+        heading="News Letters"
+        subheading="Student Welfare Committee"
+        backgroundImage="/vit-chennai-entrance.png"
+      />
       </div>
       <div className="bg-white flex space-y-8 flex-col items-center justify-center p-16">
         <Heading>Latest Newsletter</Heading>

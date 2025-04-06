@@ -8,6 +8,7 @@ const BlogsPage = () => {
         variant="text"
         heading="Blogs"
         subheading="Student Welfare Committee"
+        backgroundImage="/vit-chennai-entrance.png"
       />
     </div>
   );

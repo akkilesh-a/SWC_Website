@@ -71,6 +71,7 @@ const AboutPage = async () => {
         variant="text"
         heading="About"
         subheading="Student Welfare Committee"
+        backgroundImage="/vit-chennai-entrance.png"
       />
       <Heading className="text-center mt-2 md:hidden">
         Student Welfare Committee
