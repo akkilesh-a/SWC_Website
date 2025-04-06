@@ -9,9 +9,6 @@ export const newsletterType = defineType({
         name: 'link',
         type: 'url',
         description:'Use embed link to the newsletter!',
-        validation:(rule)=>rule
-            .required()
-            .error('URL required!')
     }),
     defineField({
         name:'date',
