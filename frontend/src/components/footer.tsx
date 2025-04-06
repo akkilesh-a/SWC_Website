@@ -45,12 +45,12 @@ export default function Footer() {
           {/* Social Links Section */}
           <div className="grid grid-cols-4 gap-y-4 w-full md:ml-[70px] md:-mb-12 md:mt-[70px] md:-mr-[150px] mt-8 md:mt-0 place-content-start text-center md:text-left">
             <Link
-              href="mailto:technovit@vit.ac.in"
+              href="mailto:chennai.directorsw@vit.ac.in"
               className="col-span-4 flex items-center justify-center md:justify-start hover:text-gray-200 transition-colors"
             >
               <Mail className="w-6 h-6 col-span-1" />
               <span className="text-md col-span-3 ml-4">
-                technovit@vit.ac.in
+                chennai.directorsw@vit.ac.in
               </span>
             </Link>
             <Link
@@ -63,14 +63,14 @@ export default function Footer() {
               </span>
             </Link>
             <Link
-              href="#"
+              href="https://www.linkedin.com/in/dr-rajasekaran-v-94a25117/"
               className="col-span-4 flex items-center justify-center md:justify-start hover:text-gray-200 transition-colors"
             >
               <Linkedin className="w-6 h-6 col-span-1" />
-              <span className="text-md col-span-3 ml-5">@LinkedIn</span>
+              <span className="text-md col-span-3 ml-5">LinkedIn</span>
             </Link>
             <Link
-              href="mailto:technovit@vit.ac.in"
+              href="#"
               className="col-span-4 flex items-center justify-center md:justify-start hover:text-gray-200 transition-colors"
             >
               <span className="text-md col-span-3 ml-4 pb-4 md:hidden">
