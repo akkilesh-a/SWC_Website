@@ -198,7 +198,7 @@ const ClubsPage = () => {
         subheading="Student Welfare Committee"
         backgroundImage="/vit-chennai-entrance.png"
       />
-      <div className="flex flex-col-reverse md:flex-row items-center w-[100%] h-[65%]">
+      <div id="scroll-to-component" className="flex flex-col-reverse md:flex-row items-center w-[100%] h-[65%]">
         <div className="flex flex-col justify-center items-center text-center  md:w-[65%]">
           <Heading className="mt-2">Clubs At VIT Chennai</Heading>
           <Text className="flex px-8 md:px-4">

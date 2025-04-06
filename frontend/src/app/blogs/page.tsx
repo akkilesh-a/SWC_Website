@@ -1,4 +1,5 @@
 import { LandingImageWithContent } from "@/components";
+import { Text } from "@/components/ui";
 import React from "react";
 
 const BlogsPage = () => {
@@ -10,6 +11,9 @@ const BlogsPage = () => {
         subheading="Student Welfare Committee"
         backgroundImage="/vit-chennai-entrance.png"
       />
+      <div id="scroll-to-component" className="h-screen">
+        <Text>Blogs appear here</Text>
+      </div>
     </div>
   );
 };

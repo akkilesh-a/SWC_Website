@@ -35,7 +35,7 @@ const Home = () => {
 const StudentWelfareCommitteeDescription = () => {
   return (
     <div
-      id="swc-description"
+      id="scroll-to-component"
       className="md:px-16 lg:px-28 xl:px-40 py-16 text-center flex flex-col justify-center items-center space-y-4  bg-[#F6F6F6] dark:bg-transparent"
     >
       <Heading>Student Welfare Committee</Heading>

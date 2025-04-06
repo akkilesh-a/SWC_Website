@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Footer from "@/components/footer";
 
 const newsreader = Newsreader({
-  weight: "400",
+  weight: ["200","300","400","500","600","700","800"],
   subsets: ["latin"],
   variable: "--font-newsreader",
 });
@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${dmSerifText.variable} ${newsreader.className}`}>
+      <body className={`${dmSerifText.variable} font-optical ${newsreader.className}`}>
         <ThemeProvider attribute="class" defaultTheme="system">
           <NavBar />
           {children}

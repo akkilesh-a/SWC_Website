@@ -37,7 +37,7 @@ async function NewsLettersPage() {
         backgroundImage="/vit-chennai-entrance.png"
       />
       </div>
-      <div className="bg-white flex space-y-8 flex-col items-center justify-center p-16">
+      <div id="scroll-to-component" className="bg-white flex space-y-8 flex-col items-center justify-center p-16">
         <Heading>Latest Newsletter</Heading>
         <iframe
           className="bg-white border border-white w-[400px] sm:w-[600px] md:w-[1000px] h-[500px]"

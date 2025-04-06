@@ -150,7 +150,7 @@ const EventsPage = () => {
         subheading="Student Welfare Committee"
         backgroundImage="/vit-chennai-entrance.png"
       />
-      <div className="md:p-[10%] lg:p-[5%] flex flex-col space-y-16 items-center sm:p-[5%]">
+      <div id="scroll-to-component" className="md:p-[10%] lg:p-[5%] flex flex-col space-y-16 items-center sm:p-[5%]">
         <div className="flex space-x-8 text-[#9C9C9C]">
           <div className="flex w-[50%] relative justify-center items-center  ">
             <Input

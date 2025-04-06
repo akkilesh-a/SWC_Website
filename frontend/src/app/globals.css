@@ -73,3 +73,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.font-optical {
+  font-optical-sizing: none;
+}

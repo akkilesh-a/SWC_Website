@@ -5,7 +5,7 @@ import { Button, Text } from "../ui";
 
 const ScrollToDescriptionButton = () => {
   const scrollToDescription = () => {
-    const section = document.getElementById("swc-description");
+    const section = document.getElementById("scroll-to-component");
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
     }

@@ -2,7 +2,7 @@
 
 import { client } from "@/sanity/client";
 import { defineQuery } from "next-sanity";
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import {
   Carousel,
   CarouselContent,
@@ -28,7 +28,7 @@ const ANNOUNCEMENTS_QUERY = defineQuery(
   }`,
 );
 
-const Announcements = () => {
+const Announcements = () : ReactNode => {
   const [announcementsData, setAnnouncementsData] = useState<ANNOUNCEMENTS_QUERYResult>(
     [],
   );
@@ -56,7 +56,7 @@ const Announcements = () => {
 
   return (
     <div>
-      <div className="md:px-16 lg:px-28 xl:px-40 py-16 text-center space-y-8">
+      <div className="px-14 md:px-16 lg:px-28 xl:px-40 py-16 text-center space-y-8">
         <Heading>Announcements</Heading>
         {loading ? (
           <div className="flex justify-center items-center h-screen">

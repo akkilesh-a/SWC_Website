@@ -76,7 +76,7 @@ const AboutPage = async () => {
       <Heading className="text-center mt-2 md:hidden">
         Student Welfare Committee
       </Heading>
-      <div className="flex flex-col md:flex-row justify-center items-center">
+      <div id="scroll-to-component" className="flex flex-col md:flex-row justify-center items-center">
         <Image
           src="/about/placeholder.png"
           className=" mt-8 md:mt-0 w-1/2 h-1/2 md:w-[50%] md:h-[auto] lg:h-[100vh] xl:w-[40vw] xl:h-[100vh]"
