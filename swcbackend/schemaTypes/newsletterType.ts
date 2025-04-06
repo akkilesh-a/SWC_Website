@@ -20,6 +20,17 @@ export const newsletterType = defineType({
         validation:(rule)=>rule
             .required()
             .error('Date required!')
+    }),
+    defineField({
+      name:"pdfFile",
+      title:"PDF File",
+      type:"file",
+      description:"PDF file of the newsletter"
+    }),
+    defineField({
+      name:"coverPhoto",
+      type:"image",
+      description:"First page of the newsletter"
     })
   ],
 })
