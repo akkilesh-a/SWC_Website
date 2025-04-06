@@ -7,6 +7,7 @@ import { Heading, Text } from "../components/ui";
 import { BlueButton } from "../components";
 import { motion } from "motion/react";
 import Lenis from "lenis";
+import Link from "next/link";
 
 const Home = () => {
   useEffect(() => {
@@ -87,7 +88,7 @@ const StudentWelfareCommitteeDescription = () => {
           facilisi. Pellentesque commodo facilisis tempus.
         </Text>
       </motion.div>
-      <BlueButton>More About SWC</BlueButton>
+      <BlueButton><Link href="/about">More About SWC</Link></BlueButton>
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { urlFor } from "../../constants/sanity";
 import { Heading, Text } from "../ui";
 import { OfficeBearer } from "@/sanity/types";
 import { motion } from "motion/react";
@@ -17,12 +16,10 @@ export default function DirectorNote({ director }: DirectorNoteProps) {
     );
   }
 
-  const imgURL = director.image
-    ? urlFor(director.image)?.url()
-    : "https://placehold.co/550x310/png";
+  const imgURL = "/homepage/rajasekaran.png"
 
   return (
-    <div className="md:px-16 lg:px-28 xl:px-64 py-16 space-y-4 md:space-y-0 flex flex-col md:flex-row items-center justify-around w-full">
+    <div className="md:px-16 lg:px-28 xl:px-56 py-16 space-y-4 md:space-y-0 flex flex-col md:flex-row items-center justify-around w-full">
       <motion.div
         initial={{ opacity: 0, scale: 0 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -63,8 +60,8 @@ export default function DirectorNote({ director }: DirectorNoteProps) {
         <Image
           src={imgURL || "https://placehold.co/550x310/png"}
           alt={director.name || "Director"}
-          width={400}
-          height={340}
+          width={600}
+          height={500}
         />
       </motion.div>
     </div>
