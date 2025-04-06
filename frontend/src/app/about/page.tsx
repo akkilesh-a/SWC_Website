@@ -6,6 +6,7 @@ import { client } from "@/sanity/client";
 import { defineQuery } from "next-sanity";
 import { urlFor } from "@/constants/sanity";
 import { OfficeBearer } from "@/sanity/types";
+import { MarqueeVertical } from "./_components/marquee-vertical";
 
 const OFFICE_BEARERS_QUERY = defineQuery(`*[
   _type == "officeBearer" && designation != "Director"
@@ -142,6 +143,10 @@ const AboutPage = async () => {
           height={100}
           alt="About"
         />
+      </div>
+
+      <div>
+        <MarqueeVertical />
       </div>
 
       <div>
