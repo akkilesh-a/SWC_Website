@@ -43,7 +43,7 @@ const OfficeBearerCard = ({
       className="w-1/2 h-1/2 md:w-[50%] md:h-[85vh] object-cover"
       width={800}
       height={800}
-      alt="About"
+      alt={name}
     />
 
     <div className="flex flex-col justify-center md:p-12 md:space-y-3 md:w-1/2">
@@ -78,11 +78,11 @@ const AboutPage = async () => {
       </Heading>
       <div id="scroll-to-component" className="flex flex-col md:flex-row justify-center items-center">
         <Image
-          src="/about/placeholder.png"
+          src="/about/vitchennai-building.jpg"
           className=" mt-8 md:mt-0 w-1/2 h-1/2 md:w-[50%] md:h-[auto] lg:h-[100vh] xl:w-[40vw] xl:h-[100vh]"
           width={700}
           height={100}
-          alt="About"
+          alt="vitchennai building with logo"
         />
         <div className=" flex flex-col items-center justify-center text-center space-y-8 xl:w-[60vw]">
           <div>
@@ -136,11 +136,11 @@ const AboutPage = async () => {
           </div>
         </div>
         <Image
-          src="/about/placeholder.png"
-          className="w-1/2 h-1/2 md:w-[50%] xl:w-[40vw] xl:h-[100vh]"
+          src="/about/independence-day.jpg"
+          className="w-1/2 h-1/2 md:w-[50%] xl:w-[40vw] xl:h-[100vh] object-cover"
           width={800}
           height={100}
-          alt="About"
+          alt="independence day celebration"
         />
       </div>
 
@@ -166,18 +166,18 @@ const AboutPage = async () => {
           );
         })}
       </div>
-      <div className="bg-gray-100 flex flex-col justify-center items-center">
-        <Heading className="underline p-2 flex justify-center">
+            <div className="bg-gray-100 dark:bg-black flex flex-col justify-center items-center">
+        <Heading className="underline p-2 flex justify-center text-gray-900 dark:text-gray-100">
           Student Council
         </Heading>
         <Image
-          src="/about/placeholder.png"
-          className="w-1/2 h-1/2 md:w-[60vw] md:h-[60vh] "
+          src="/about/student-council.webp"
+          className="w-1/2 h-1/2 md:w-[60vw] md:h-[60vh] object-cover"
           width={800}
           height={100}
           alt="About"
         />
-        <div className="flex flex-col justify-center md:text-xl lg:text-3xl pt-3">
+        <div className="flex flex-col justify-center md:text-xl lg:text-3xl pt-3 text-gray-800 dark:text-gray-200">
           <Text>Lorem ipsum something something</Text>
           <Text className="flex justify-center">Student welfare council</Text>
         </div>

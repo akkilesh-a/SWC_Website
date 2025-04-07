@@ -4,7 +4,7 @@ import Image from "next/image";
 const reviews = [
   {
     name: "MC",
-    img: "/marquee/1.png",
+    img: "/marquee/1.jpg",
   },
   {
     name: "Guest speech",
@@ -14,6 +14,10 @@ const reviews = [
     name: "Lighting candle",
     img: "/marquee/3.png",
   },
+  {
+    name:"Independence Day",
+    img: "/marquee/4.jpg",
+  }
 ];
 
 const firstRow = reviews.slice(0, reviews.length / 2);
