@@ -46,8 +46,13 @@ export function MarqueeVertical() {
           <ReviewCard key={review.name} {...review} />
         ))}
       </Marquee>
-      <Marquee pauseOnHover vertical className="[--duration:20s]">
+      <Marquee pauseOnHover vertical className="[--duration:20s] hidden sm:block">
         {firstRow.map((review) => (
+          <ReviewCard key={review.name} {...review} />
+        ))}
+      </Marquee>
+      <Marquee reverse pauseOnHover vertical className="[--duration:20s] hidden md:block">
+        {secondRow.map((review) => (
           <ReviewCard key={review.name} {...review} />
         ))}
       </Marquee>
