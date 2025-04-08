@@ -2,7 +2,7 @@
 
 import { LandingImageWithContent } from "@/components";
 import { client } from "@/sanity/client";
-import { Calendar, ListFilter, MapPin, Search, User } from "lucide-react";
+import { ListFilter, MapPin, Search, User } from "lucide-react";
 import { defineQuery } from "next-sanity";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -18,6 +18,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  Slider,
 } from "@/components/ui";
 import { Club, Event, Venue } from "@/sanity/types";
 
@@ -103,6 +104,11 @@ const EventsPage = () => {
   const [eventPostersLoading, setEventPostersLoading] = useState(true);
   const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
   const [search, setSearch] = useState("");
+  
+  // For price filter
+  const [minEntryFee, setMinEntryFee] = useState<number>(0);
+  const [maxEntryFee, setMaxEntryFee] = useState<number>(1000);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
 
   // For Select Dropdown
   const [clubs, setClubs] = useState<string[]>([]);
@@ -113,6 +119,15 @@ const EventsPage = () => {
       const data = await client.fetch(EVENTS_QUERY);
       setEvents(data);
       setEventPostersLoading(false);
+
+      // Calculate min and max entry fees
+      const entryFees = data.map((event: Event) => event.entryFee || 0);
+      const minFee = Math.min(...entryFees);
+      const maxFee = Math.max(...entryFees);
+      
+      setMinEntryFee(minFee);
+      setMaxEntryFee(maxFee > 0 ? maxFee : 1000); // Set a default if all events are free
+      setPriceRange([minFee, maxFee > 0 ? maxFee : 1000]);
 
       // For Select Dropdown
       const clubData = await client.fetch(CLUBS_QUERY);
@@ -129,6 +144,7 @@ const EventsPage = () => {
       const club = event.clubname as unknown as Club;
       const clubs = event.clubnames as unknown as Club[];
       const clubNames: string[] = [];
+      
       if (club) {
         clubNames.push(club.name!);
         clubNames.push(club.abbreviation!);
@@ -138,20 +154,28 @@ const EventsPage = () => {
         clubs?.map((club) => clubNames.push(club.abbreviation!));
       }
 
+      // Add price range filtering
+      const entryFee = event.entryFee || 0;
+      const isPriceInRange = entryFee >= priceRange[0] && entryFee <= priceRange[1];
+      
       return (
-        event.name?.toLowerCase().includes(search.toLowerCase()) ||
+        (event.name?.toLowerCase().includes(search.toLowerCase()) ||
         venueNames?.some((venue) =>
           venue?.toLowerCase().includes(search.toLowerCase()),
         ) ||
         clubNames?.some((club) =>
           club?.toLowerCase().includes(search.toLowerCase()),
-        )
+        )) && isPriceInRange
       );
     });
     setFilteredEvents(filteredData);
-  }, [search]);
+  }, [search, priceRange, events]);
 
-  const data = search ? filteredEvents : events;
+  const data = search || priceRange[0] > minEntryFee || priceRange[1] < maxEntryFee ? filteredEvents : events;
+
+  const handlePriceRangeChange = (value: [number, number]) => {
+    setPriceRange(value);
+  };
 
   return (
     <div className="space-y-16">
@@ -162,50 +186,73 @@ const EventsPage = () => {
         backgroundImage="/vit-chennai-entrance.png"
       />
       <div id="scroll-to-component" className="md:p-[10%] lg:p-[5%] flex flex-col space-y-16 items-center sm:p-[5%]">
-        <div className="flex space-x-8 text-[#9C9C9C]">
-          <div className="flex w-[50%] relative justify-center items-center  ">
-            <Input
-              type="text"
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search"
-              className="bg-[#EBEBEB] px-8 rounded-md"
-            />
-            <Search className="absolute left-2" />
-          </div>
-          <div className="flex w-[50%] relative justify-center items-center text-[#9C9C9C] ">
-            <Select
-              onValueChange={(value) => {
-                if (value === "all") {
-                  setSearch("");
-                } else {
-                  setSearch(value);
-                }
-              }}
-            >
-              <SelectTrigger className="bg-[#EBEBEB] w-[280px] ">
-                <div className="flex space-x-2 items-center">
-                  <ListFilter />
-                  <SelectValue placeholder="Select Clubs" />
+        <div className="flex flex-col space-y-8 w-full">
+          <div className="flex space-x-8 text-[#9C9C9C]">
+            <div className="flex w-[50%] relative justify-center items-center">
+              <Input
+                type="text"
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search"
+                className="bg-[#EBEBEB] px-8 rounded-md"
+              />
+              <Search className="absolute left-2" />
+            </div>
+            <div className="flex w-[25%] relative justify-center items-center text-[#9C9C9C]">
+              <Select
+                onValueChange={(value) => {
+                  if (value === "all") {
+                    setSearch("");
+                  } else {
+                    setSearch(value);
+                  }
+                }}
+              >
+                <SelectTrigger className="bg-[#EBEBEB] w-[280px]">
+                  <div className="flex space-x-2 items-center">
+                    <ListFilter />
+                    <SelectValue placeholder="Select Clubs" />
+                  </div>
+                </SelectTrigger>
+                <SelectContent className="bg-[#EBEBEB] dark:text-black">
+                  <SelectItem value="all">All Clubs</SelectItem>
+                  {dropdownDataLoading ? (
+                    <div>Loading...</div>
+                  ) : (
+                    clubs.map((club, index) => {
+                      return (
+                        <SelectItem value={club} key={index}>
+                          {club}
+                        </SelectItem>
+                      );
+                    })
+                  )}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex w-[25%] relative justify-center items-center text-[#9C9C9C]">
+              {/* Price Range Slider */}
+              <div className="w-full px-4">
+                <div className="flex justify-between mb-2 items-center">
+                  <h3 className="font-medium text-sm">Price Range</h3>
+                  <div className="text-sm font-medium">
+                    ₹{priceRange[0]} - ₹{priceRange[1]}
+                  </div>
                 </div>
-              </SelectTrigger>
-              <SelectContent className="bg-[#EBEBEB]">
-                <SelectItem value="all">All Clubs</SelectItem>
-                {dropdownDataLoading ? (
-                  <div>Loading...</div>
-                ) : (
-                  clubs.map((club, index) => {
-                    return (
-                      <SelectItem value={club} key={index}>
-                        {club}
-                      </SelectItem>
-                    );
-                  })
-                )}
-              </SelectContent>
-            </Select>
+                <Slider
+                  defaultValue={[minEntryFee, maxEntryFee]}
+                  value={priceRange}
+                  min={minEntryFee}
+                  max={maxEntryFee}
+                  step={10}
+                  onValueChange={handlePriceRangeChange}
+                  className="w-full"
+                />
+              </div>
+            </div>
           </div>
         </div>
-        <div className="grid min-h-[100vh] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16">
+        
+        <div className="grid min-h-[100vh] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-16 justify-items-center ">
           {eventPostersLoading ? (
             <div>Loading...</div>
           ) : (
@@ -373,7 +420,7 @@ function EventPosterWithDetailsCard({ data }: { data: Event }) {
           </div>
           <div className="flex justify-between">
             <div className="flex items-center gap-2">
-              <Calendar className="sm:w-10 sm:h-10 w-8 h-8" />
+              <CustomCalendarIcon />
               <div className="flex flex-col">
                 <div>
                   {data.startDate

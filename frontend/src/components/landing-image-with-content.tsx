@@ -47,21 +47,21 @@ export const LandingImageWithContent = ({
           className="absolute top-[250px]"
         >
           <Image
-            className="md:hidden"
+            className={`md:hidden ${variant=="text" ? "hidden" : ""}`}
             src="/home-page-trapezium.png"
             width={400}
             height={100}
             alt="homepage-trapezium-element"
           />
           <Image
-            className="md:block lg:hidden hidden"
+            className={`md:block lg:hidden hidden ${variant=="text" ? "hidden" : ""}`}
             src="/home-page-trapezium.png"
             width={500}
             height={100}
             alt="homepage-trapezium-element"
           />
           <Image
-            className="lg:block hidden"
+            className={`lg:block hidden ${variant=="text" ? "hidden" : ""}`}
             src="/home-page-trapezium.png"
             width={800}
             height={100}
@@ -72,7 +72,7 @@ export const LandingImageWithContent = ({
             <div
               className={`absolute space-y-2 top-10 lg:top-16 left-4 text-white ${className}`}
             >
-              <div className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl underline decoration-[3px]">
+              <div className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl underline underline-offset-8 decoration-[3px]">
                 {heading}
               </div>
               <div className="text-xl sm:text-2xl md:text-3xl lg:text-5xl SerifText">
